@@ -1,0 +1,91 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainView"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.myapplication.MainActivity" >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:id="@+id/userFname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="first name"
+            android:layout_marginTop="80dp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="45dp" />
+        <EditText
+            android:id="@+id/userLname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="last name"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="45dp" />
+
+        <EditText
+            android:id="@+id/userEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="email"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="45dp" />
+
+
+
+        <EditText
+            android:id="@+id/UserpassWord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="password"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/cnsconfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="confirm password"
+            android:inputType="textPassword" />
+
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"/>
+        <Button
+
+            android:id="@+id/select_problems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="select problems"
+            />
+
+
+        <Button
+
+            android:id="@+id/signUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="register as a counsellor"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+
+
+</RelativeLayout>
