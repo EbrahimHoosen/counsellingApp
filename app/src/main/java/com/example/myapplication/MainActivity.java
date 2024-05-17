@@ -77,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Creating User Account", LENGTH_SHORT).show();
-                Intent i = new Intent(getApplicationContext(), registerUser.class);
-                startActivity(i);
+                Intent instRegisterUser = new Intent(getApplicationContext(), registerUser.class);
+                startActivity(instRegisterUser);
                 //createAccountDialog.dismiss();
             }
         });
@@ -86,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
         btnCreateAccountCounsellor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent j = new Intent(getApplicationContext(), registerCounsellor.class);
-                startActivity(j);
+                Intent instRegisterCounsellor = new Intent(getApplicationContext(), registerCounsellor.class);
+                startActivity(instRegisterCounsellor);
                 Toast.makeText(MainActivity.this, "Creating Cousellor Account", LENGTH_SHORT).show();
                 //createAccountDialog.dismiss();
             }
