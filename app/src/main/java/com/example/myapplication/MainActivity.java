@@ -1,4 +1,4 @@
-package com.example.counsellingapp;
+package com.example.myapplication;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
