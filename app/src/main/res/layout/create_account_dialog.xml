@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp">
+
+        <TextView
+            android:id="@+id/txtCreateAccountDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Create Account"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtCreateAsDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="24dp"
+            android:text="Create Account As:"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/txtCreateAccountDialog"
+            app:layout_constraintStart_toStartOf="@+id/txtCreateAccountDialog"
+            app:layout_constraintTop_toBottomOf="@+id/txtCreateAccountDialog" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintStart_toStartOf="@+id/txtCreateAccountDialog"
+            app:layout_constraintEnd_toEndOf="@+id/txtCreateAccountDialog"
+            app:layout_constraintTop_toBottomOf="@+id/txtCreateAsDialog">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/txtCreateAccountDialog"
+                app:layout_constraintStart_toStartOf="@+id/txtCreateAccountDialog"
+                app:layout_constraintTop_toBottomOf="@+id/txtCreateAsDialog">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCreateUser"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:padding="12dp"
+                    android:text="User"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:strokeColor="@color/black"
+                    app:strokeWidth="2dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCreateCounsellor"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:padding="12dp"
+                    android:text="Counsellor"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:strokeColor="@color/black"
+                    app:strokeWidth="2dp" />
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/red"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:padding="12dp"
+                android:text="Cancel"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:strokeColor="@color/black"
+                app:strokeWidth="2dp" />
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

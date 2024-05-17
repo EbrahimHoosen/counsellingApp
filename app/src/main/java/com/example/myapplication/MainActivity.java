@@ -2,9 +2,11 @@ package com.example.myapplication;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -16,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,6 +34,9 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    Dialog createAccountDialog;
+    Button btnCreateAccountCancel, btnCreateAccountUser, btnCreateAccountCounsellor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,48 +48,73 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        Button btn = findViewById(R.id.btnLogin);
-        Button testing = findViewById(R.id.userPage);
+        Button btnLogin = findViewById(R.id.btnLogin);
         RadioButton user = findViewById(R.id.radioUser);
         RadioButton counsellor = findViewById(R.id.radioCounsellor);
-        Button crtbtn = findViewById(R.id.btnCreateAccount);
-        btn.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (user.isChecked()) {
-                    userLogin();
+                    login("Users");
                 } else if (counsellor.isChecked()) {
-                    //call counsellorLogin()
+                    login("Counsellors");
                 } else {
                     Toast.makeText(MainActivity.this, "User Type Must Be Selected", LENGTH_SHORT).show();
                 }
 
             }
         });
-        testing.setOnClickListener(new View.OnClickListener() {
+
+        createAccountDialog = new Dialog(MainActivity.this);
+        createAccountDialog.setContentView(R.layout.create_account_dialog);
+        createAccountDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        createAccountDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.create_account_bg));
+        createAccountDialog.setCancelable(false);
+
+        btnCreateAccountUser = createAccountDialog.findViewById(R.id.btnCreateUser);
+        btnCreateAccountUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent j = new Intent(getApplicationContext(), registerUser.class);
-                startActivity(j);
+                Toast.makeText(MainActivity.this, "Creating User Account", LENGTH_SHORT).show();
+                Intent i = new Intent(getApplicationContext(), registerUser.class);
+                startActivity(i);
+                //createAccountDialog.dismiss();
             }
         });
-        crtbtn.setOnClickListener(new View.OnClickListener() {
+        btnCreateAccountCounsellor = createAccountDialog.findViewById(R.id.btnCreateCounsellor);
+        btnCreateAccountCounsellor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), registerCounsellor.class);
-                startActivity(i);
+                Intent j = new Intent(getApplicationContext(), registerCounsellor.class);
+                startActivity(j);
+                Toast.makeText(MainActivity.this, "Creating Cousellor Account", LENGTH_SHORT).show();
+                //createAccountDialog.dismiss();
+            }
+        });
+
+        btnCreateAccountCancel = createAccountDialog.findViewById(R.id.btnCancel);
+        btnCreateAccountCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createAccountDialog.dismiss();
+            }
+        });
+
+        Button btnCreateAccount = findViewById(R.id.btnCreateAccount);
+        btnCreateAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createAccountDialog.show();
             }
         });
     }
 
-    public void userLogin() {
+    public void login(String type) {
 
-        System.out.println("Login Attempt Recorded");
+        OkHttpClient client = new OkHttpClient();
 
-        OkHttpClient client =new OkHttpClient();
-
-        String email, password;
+        String email, password, table = type;
         EditText emailTxt = (EditText) findViewById(R.id.txtEmail);
         EditText passwordTxt = (EditText) findViewById(R.id.txtPassword);
 
@@ -95,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
         HttpUrl.Builder urlBuilder = HttpUrl.parse("https://lamp.ms.wits.ac.za/home/s2663134/login.php").newBuilder();
         urlBuilder.addQueryParameter("email", email);
         urlBuilder.addQueryParameter("password", password);
+        urlBuilder.addQueryParameter("table", type);
         String url = urlBuilder.build().toString();
 
         Request req =new Request.Builder().url(url).build();
@@ -119,12 +149,17 @@ public class MainActivity extends AppCompatActivity {
                                 jsonEmail = item.getString("EmailAddress");
                                 jsonPassword = item.getString("Password");
                             }
-                            if (email.equals(jsonEmail) && password.equals(jsonPassword)) {
-                                Toast.makeText(MainActivity.this, "Login Successful", LENGTH_SHORT).show();
-                                //System.out.println("Login Successful");
+                            if (!email.equals("") || !password.equals("")) {
+                                if (email.equals(jsonEmail) && password.equals(jsonPassword)) {
+                                    Toast.makeText(MainActivity.this, "Login Successful", LENGTH_SHORT).show();
+                                    //System.out.println("Login Successful");
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Email or Password Incorrect", LENGTH_SHORT).show();
+                                }
                             } else {
                                 Toast.makeText(MainActivity.this, "Email or Password Incorrect", LENGTH_SHORT).show();
                             }
+
 
                         } catch (JSONException e) {
                             throw new RuntimeException(e);

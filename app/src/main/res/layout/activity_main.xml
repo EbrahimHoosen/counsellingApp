@@ -121,17 +121,6 @@
             android:layout_gravity="center"
             android:text="LOGIN" />
 
-        <Button
-            android:id="@+id/userPage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:onClick="registerUsers"
-            android:layout_gravity="center"
-            android:text="user page" />
-
     </LinearLayout>
 
     <Button
@@ -148,6 +137,5 @@
         android:text="No Account? Create One"
         android:textSize="12sp"
         android:textStyle="italic" />
-
 
 </RelativeLayout>
