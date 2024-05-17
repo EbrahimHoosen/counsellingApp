@@ -66,12 +66,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Declares a dialog popup window that lets users decide what to register as
         createAccountDialog = new Dialog(MainActivity.this);
         createAccountDialog.setContentView(R.layout.create_account_dialog);
         createAccountDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         createAccountDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.create_account_bg));
         createAccountDialog.setCancelable(false);
 
+        //Creates a user account
         btnCreateAccountUser = createAccountDialog.findViewById(R.id.btnCreateUser);
         btnCreateAccountUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
                 //createAccountDialog.dismiss();
             }
         });
+
+        //Creates a counsellor account
         btnCreateAccountCounsellor = createAccountDialog.findViewById(R.id.btnCreateCounsellor);
         btnCreateAccountCounsellor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Initializes the create account dialog popup
         Button btnCreateAccount = findViewById(R.id.btnCreateAccount);
         btnCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
