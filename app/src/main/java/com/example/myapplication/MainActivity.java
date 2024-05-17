@@ -3,6 +3,7 @@ package com.example.myapplication;
 import static android.widget.Toast.LENGTH_SHORT;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Creating User Account", LENGTH_SHORT).show();
+                Intent i = new Intent(getApplicationContext(), registerUser.class);
+                startActivity(i);
                 //createAccountDialog.dismiss();
             }
         });
@@ -83,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
         btnCreateAccountCounsellor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent j = new Intent(getApplicationContext(), registerCounsellor.class);
+                startActivity(j);
                 Toast.makeText(MainActivity.this, "Creating Cousellor Account", LENGTH_SHORT).show();
                 //createAccountDialog.dismiss();
             }
