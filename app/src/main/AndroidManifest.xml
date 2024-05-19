@@ -19,9 +19,6 @@
             android:name=".registerUser"
             android:exported="false" />
         <activity
-            android:name=".loginActivity"
-            android:exported="false" />
-        <activity
             android:name=".checkboxes"
             android:exported="true"/>
         <activity

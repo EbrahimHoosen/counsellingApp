@@ -66,29 +66,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Declares a dialog popup window that lets users decide what to register as
         createAccountDialog = new Dialog(MainActivity.this);
         createAccountDialog.setContentView(R.layout.create_account_dialog);
         createAccountDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         createAccountDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.create_account_bg));
         createAccountDialog.setCancelable(false);
 
+        //Creates a user account
         btnCreateAccountUser = createAccountDialog.findViewById(R.id.btnCreateUser);
         btnCreateAccountUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Creating User Account", LENGTH_SHORT).show();
-                Intent i = new Intent(getApplicationContext(), registerUser.class);
-                startActivity(i);
+                Intent instRegisterUser = new Intent(getApplicationContext(), registerUser.class);
+                startActivity(instRegisterUser);
                 //createAccountDialog.dismiss();
             }
         });
+
+        //Creates a counsellor account
         btnCreateAccountCounsellor = createAccountDialog.findViewById(R.id.btnCreateCounsellor);
         btnCreateAccountCounsellor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent j = new Intent(getApplicationContext(), registerCounsellor.class);
-                startActivity(j);
-                Toast.makeText(MainActivity.this, "Creating Cousellor Account", LENGTH_SHORT).show();
+                Intent instRegisterCounsellor = new Intent(getApplicationContext(), registerCounsellor.class);
+                startActivity(instRegisterCounsellor);
                 //createAccountDialog.dismiss();
             }
         });
@@ -101,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Initializes the create account dialog popup
         Button btnCreateAccount = findViewById(R.id.btnCreateAccount);
         btnCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         urlBuilder.addQueryParameter("table", type);
         String url = urlBuilder.build().toString();
 
-        Request req =new Request.Builder().url(url).build();
+        Request req = new Request.Builder().url(url).build();
 
         client.newCall(req).enqueue(new Callback() {
             @Override
@@ -152,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
                             if (!email.equals("") || !password.equals("")) {
                                 if (email.equals(jsonEmail) && password.equals(jsonPassword)) {
                                     Toast.makeText(MainActivity.this, "Login Successful", LENGTH_SHORT).show();
-                                    //System.out.println("Login Successful");
                                 } else {
                                     Toast.makeText(MainActivity.this, "Email or Password Incorrect", LENGTH_SHORT).show();
                                 }
