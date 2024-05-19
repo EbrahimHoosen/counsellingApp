@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         btnCreateAccountUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Creating User Account", LENGTH_SHORT).show();
                 Intent instRegisterUser = new Intent(getApplicationContext(), registerUser.class);
                 startActivity(instRegisterUser);
                 //createAccountDialog.dismiss();
@@ -92,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent instRegisterCounsellor = new Intent(getApplicationContext(), registerCounsellor.class);
                 startActivity(instRegisterCounsellor);
-                Toast.makeText(MainActivity.this, "Creating Cousellor Account", LENGTH_SHORT).show();
                 //createAccountDialog.dismiss();
             }
         });
@@ -132,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         urlBuilder.addQueryParameter("table", type);
         String url = urlBuilder.build().toString();
 
-        Request req =new Request.Builder().url(url).build();
+        Request req = new Request.Builder().url(url).build();
 
         client.newCall(req).enqueue(new Callback() {
             @Override
@@ -157,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
                             if (!email.equals("") || !password.equals("")) {
                                 if (email.equals(jsonEmail) && password.equals(jsonPassword)) {
                                     Toast.makeText(MainActivity.this, "Login Successful", LENGTH_SHORT).show();
-                                    //System.out.println("Login Successful");
                                 } else {
                                     Toast.makeText(MainActivity.this, "Email or Password Incorrect", LENGTH_SHORT).show();
                                 }

@@ -12,6 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 
@@ -28,7 +32,9 @@ public class registerUser extends AppCompatActivity {
 
     Button UserSignUp, select_items;
     OkHttpClient client;
-    final String url_Register= "https://lamp.ms.wits.ac.za/home/s2321330/registrationUser.php";
+    final String url_Register= "https://lamp.ms.wits.ac.za/home/s2663134/userReg.php";
+    final String url_userExists = "https://lamp.ms.wits.ac.za/home/s2663134/userExists.php";
+    boolean usernameExists = false, emailExists = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,14 +65,19 @@ public class registerUser extends AppCompatActivity {
                 String Pass = password.getText().toString();
                 String confirmPass = confirmPassword.getText().toString();
                 if (Pass.isEmpty()||Email.isEmpty()||confirmPass.isEmpty()){
-                    Toast.makeText(registerUser.this, "please fill in all fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(registerUser.this, "Fields Cannot Be Left Empty", Toast.LENGTH_SHORT).show();
                 }
                 else if (!Pass.equals(confirmPass)){
-                    Toast.makeText(registerUser.this, "passwords are different", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(registerUser.this, "Passwords Do Not Match", Toast.LENGTH_SHORT).show();
+                }
+                else if (usernameExists) {
+                    Toast.makeText(registerUser.this, "Username Taken", Toast.LENGTH_SHORT).show();
+                } else if (emailExists) {
+                    Toast.makeText(registerUser.this, "Email Already In Use", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     registerUser(username, Email, Pass, confirmPass);
-                    Toast.makeText(registerUser.this, "sign up was successful", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(registerUser.this, "Sign Up Successful", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -109,6 +120,52 @@ public class registerUser extends AppCompatActivity {
             }
         });
 
+    }
+
+    //Checks if a username or email is already in use
+    public void checkExists() {
+
+        OkHttpClient client = new OkHttpClient();
+        Request req = new Request.Builder().url(url_userExists).build();
+
+        client.newCall(req).enqueue((new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+
+                final String responseData = response.body().string();
+                registerUser.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONArray out = new JSONArray(responseData);
+                            String jsonEmail = "", jsonUser = "";
+
+                            for (int i = 0; i < out.length(); i++) {
+                                JSONObject item = out.getJSONObject(i);
+                                jsonEmail = item.getString("EmailAddress");
+                                jsonUser = item.getString("Username");
+                            }
+
+                            if (email.equals(jsonEmail)) {
+                                emailExists = true;
+                            }
+
+                            if (userName.equals(jsonUser)) {
+                                usernameExists = true;
+                            }
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
+
+            }
+        }));
     }
 
 }
