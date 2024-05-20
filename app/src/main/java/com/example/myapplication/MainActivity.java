@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
+
                             JSONArray all = new JSONArray(responseData);
                             String jsonEmail = "", jsonPassword = "";
                             for (int i = 0; i < all.length(); i++) {
@@ -161,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
                             } else {
                                 Toast.makeText(MainActivity.this, "Email or Password Incorrect", LENGTH_SHORT).show();
                             }
-
 
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
