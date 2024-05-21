@@ -125,6 +125,8 @@ public class registerCounsellor extends AppCompatActivity {
                                         } else {
                                             registerUser(fname, lname, email,spinnerString, password);
                                             Toast.makeText(registerCounsellor.this, "Sign Up Successful", Toast.LENGTH_SHORT).show();
+                                            Intent backToRegCounsellor = new Intent(getApplicationContext(), MainActivity.class);
+                                            startActivity(backToRegCounsellor);
                                         }
                                     }
 

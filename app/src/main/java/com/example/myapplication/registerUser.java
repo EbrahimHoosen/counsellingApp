@@ -111,6 +111,8 @@ public class registerUser extends AppCompatActivity {
                                         else {
                                             registerUser(username, email, password);
                                             Toast.makeText(registerUser.this, "Sign Up Successful", Toast.LENGTH_SHORT).show();
+                                            Intent backToRegUser = new Intent(getApplicationContext(), MainActivity.class);
+                                            startActivity(backToRegUser);
                                         }
                                     }
 
