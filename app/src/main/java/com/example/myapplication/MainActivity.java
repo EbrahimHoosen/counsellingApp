@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
         OkHttpClient client = new OkHttpClient();
 
-        String email, password, table = type;
+        String email, password;
         EditText emailTxt = (EditText) findViewById(R.id.txtEmail);
         EditText passwordTxt = (EditText) findViewById(R.id.txtPassword);
 
@@ -147,14 +147,13 @@ public class MainActivity extends AppCompatActivity {
                         try {
 
                             JSONArray all = new JSONArray(responseData);
-                            String jsonEmail = "", jsonPassword = "";
+                            String jsonEmail = "";
                             for (int i = 0; i < all.length(); i++) {
                                 JSONObject item = all.getJSONObject(i);
                                 jsonEmail = item.getString("EmailAddress");
-                                jsonPassword = item.getString("Password");
                             }
-                            if (!email.equals("") || !password.equals("")) {
-                                if (email.equals(jsonEmail) && password.equals(jsonPassword)) {
+                            if (!email.equals("")) {
+                                if (email.equals(jsonEmail)) {
                                     Toast.makeText(MainActivity.this, "Login Successful", LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(MainActivity.this, "Email or Password Incorrect", LENGTH_SHORT).show();
