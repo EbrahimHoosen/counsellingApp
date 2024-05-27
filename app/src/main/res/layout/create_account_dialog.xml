@@ -69,7 +69,7 @@
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     app:strokeColor="@color/black"
-                    app:strokeWidth="2dp" />
+                    app:strokeWidth="1dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnCreateCounsellor"
@@ -84,7 +84,7 @@
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     app:strokeColor="@color/black"
-                    app:strokeWidth="2dp" />
+                    app:strokeWidth="1dp" />
 
             </LinearLayout>
 
@@ -104,7 +104,7 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:strokeColor="@color/black"
-                app:strokeWidth="2dp" />
+                app:strokeWidth="1dp" />
 
         </LinearLayout>
 

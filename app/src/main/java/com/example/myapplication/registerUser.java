@@ -41,11 +41,11 @@ public class registerUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         client = new OkHttpClient();
-        txtUsername = (EditText) findViewById(R.id.UserFname);
-        txtEmail = (EditText) findViewById(R.id.Useremail);
-        txtPassword = (EditText) findViewById(R.id.UserpassWord);
-        txtConfirmPassword = (EditText) findViewById(R.id.Userconfirm);
-        UserSignUp = (Button) findViewById(R.id.UsersignUp);
+        txtUsername = (EditText) findViewById(R.id.username);
+        txtEmail = (EditText) findViewById(R.id.userEmail);
+        txtPassword = (EditText) findViewById(R.id.userPassword);
+        txtConfirmPassword = (EditText) findViewById(R.id.userPConfirm);
+        UserSignUp = (Button) findViewById(R.id.btnUserSignUp);
         select_items = findViewById(R.id.select_problems);
 
         select_items.setOnClickListener(new View.OnClickListener() {

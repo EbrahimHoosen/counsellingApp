@@ -12,9 +12,6 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,11 +42,11 @@ public class registerCounsellor extends AppCompatActivity {
         setContentView(R.layout.activity_register_counsellor);
 
         client = new OkHttpClient();
-        txtFirstName = (EditText) findViewById(R.id.userFname);
-        txtLastName = (EditText) findViewById(R.id.userLname);
-        txtEmail = (EditText) findViewById(R.id.userEmail);
-        txtPassword= (EditText) findViewById(R.id.UserpassWord);
-        txtConfirmPassword = (EditText) findViewById(R.id.cnsconfirm);
+        txtFirstName = (EditText) findViewById(R.id.counsellorFName);
+        txtLastName = (EditText) findViewById(R.id.counsellorLName);
+        txtEmail = (EditText) findViewById(R.id.counsellorEmail);
+        txtPassword= (EditText) findViewById(R.id.userPassword);
+        txtConfirmPassword = (EditText) findViewById(R.id.counsellorPConfirm);
         counsellorSignUp = (Button) findViewById(R.id.signUp);
         selectProblems = (Button) findViewById(R.id.select_problems);
         Spinner dropdown = findViewById(R.id.spinner1);

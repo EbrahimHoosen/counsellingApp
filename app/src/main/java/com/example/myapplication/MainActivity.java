@@ -34,8 +34,9 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    Dialog createAccountDialog;
-    Button btnCreateAccountCancel, btnCreateAccountUser, btnCreateAccountCounsellor;
+    private Dialog createAccountDialog;
+    private String email, password;
+    private Login loginAttempt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +52,44 @@ public class MainActivity extends AppCompatActivity {
         Button btnLogin = findViewById(R.id.btnLogin);
         RadioButton user = findViewById(R.id.radioUser);
         RadioButton counsellor = findViewById(R.id.radioCounsellor);
+
+        EditText email_txt = (EditText) findViewById(R.id.txtEmail);
+        EditText password_txt = (EditText) findViewById(R.id.txtPassword);
+        email = email_txt.getText().toString();
+        password = password_txt.getText().toString();
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                email = email_txt.getText().toString();
+                password = password_txt.getText().toString();
 
-                if (user.isChecked()) {
-                    login("Users");
-                } else if (counsellor.isChecked()) {
-                    login("Counsellors");
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Email and Password Required", LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(MainActivity.this, "User Type Must Be Selected", LENGTH_SHORT).show();
+                    if (!user.isChecked() && !counsellor.isChecked()) {
+                        Toast.makeText(MainActivity.this, "User Type Must Be Selected", LENGTH_SHORT).show();
+                    } else {
+                        if (user.isChecked()) {
+                            //Creates an instance of the Login class to verify User credentials
+                            loginAttempt = new Login(email, password, "Users");
+                        } else if (counsellor.isChecked()) {
+                            //Creates an instance of the Login class to verify Counsellor credentials
+                            loginAttempt = new Login(email, password, "Counsellors");
+                        }
+                        loginAttempt.login(new Login.LoginCallback() {
+                            @Override
+                            public void onResult(String result) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(MainActivity.this, result, LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        });
+                    }
+
                 }
 
             }
@@ -74,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         createAccountDialog.setCancelable(false);
 
         //Creates a user account
-        btnCreateAccountUser = createAccountDialog.findViewById(R.id.btnCreateUser);
+        Button btnCreateAccountUser = createAccountDialog.findViewById(R.id.btnCreateUser);
         btnCreateAccountUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Creates a counsellor account
-        btnCreateAccountCounsellor = createAccountDialog.findViewById(R.id.btnCreateCounsellor);
+        Button btnCreateAccountCounsellor = createAccountDialog.findViewById(R.id.btnCreateCounsellor);
         btnCreateAccountCounsellor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnCreateAccountCancel = createAccountDialog.findViewById(R.id.btnCancel);
+        Button btnCreateAccountCancel = createAccountDialog.findViewById(R.id.btnCancel);
         btnCreateAccountCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,61 +142,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void login(String type) {
-
-        OkHttpClient client = new OkHttpClient();
-
-        String email, password;
-        EditText emailTxt = (EditText) findViewById(R.id.txtEmail);
-        EditText passwordTxt = (EditText) findViewById(R.id.txtPassword);
-
-        email = emailTxt.getText().toString();
-        password = passwordTxt.getText().toString();
-
-        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://lamp.ms.wits.ac.za/home/s2663134/login.php").newBuilder();
-        urlBuilder.addQueryParameter("email", email);
-        urlBuilder.addQueryParameter("password", password);
-        urlBuilder.addQueryParameter("table", type);
-        String url = urlBuilder.build().toString();
-
-        Request req = new Request.Builder().url(url).build();
-
-        client.newCall(req).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                final String responseData = response.body().string();
-                MainActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-
-                            JSONArray all = new JSONArray(responseData);
-                            String jsonEmail = "";
-                            for (int i = 0; i < all.length(); i++) {
-                                JSONObject item = all.getJSONObject(i);
-                                jsonEmail = item.getString("EmailAddress");
-                            }
-                            if (!email.equals("")) {
-                                if (email.equals(jsonEmail)) {
-                                    Toast.makeText(MainActivity.this, "Login Successful", LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(MainActivity.this, "Email or Password Incorrect", LENGTH_SHORT).show();
-                                }
-                            } else {
-                                Toast.makeText(MainActivity.this, "Email or Password Incorrect", LENGTH_SHORT).show();
-                            }
-
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                });
-            }
-        });
-    }
 }
