@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -33,6 +34,7 @@ import okhttp3.Response;
 
 public class registerCounsellor extends AppCompatActivity {
     EditText txtFirstName, txtLastName, txtEmail, txtPassword, txtConfirmPassword;
+
     Button counsellorSignUp, selectProblems;
     OkHttpClient client;
     final String url_Register = "https://lamp.ms.wits.ac.za/home/s2663134/counsellorReg.php";
@@ -50,7 +52,7 @@ public class registerCounsellor extends AppCompatActivity {
         txtEmail = (EditText) findViewById(R.id.userEmail);
         txtPassword= (EditText) findViewById(R.id.UserpassWord);
         txtConfirmPassword = (EditText) findViewById(R.id.cnsconfirm);
-        counsellorSignUp = (Button) findViewById(R.id.signUp);
+        counsellorSignUp = findViewById(R.id.buttonSignUp);
         selectProblems = (Button) findViewById(R.id.select_problems);
         Spinner dropdown = findViewById(R.id.spinner1);
 
@@ -66,6 +68,16 @@ public class registerCounsellor extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        TextView backToLogin = new TextView(this);
+        backToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent backToLoginPage = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(backToLoginPage);
+            }
+        });
+
 
         counsellorSignUp.setOnClickListener(new View.OnClickListener() {
             @Override

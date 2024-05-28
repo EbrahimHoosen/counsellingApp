@@ -1,91 +1,145 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mainView"
-    android:orientation="vertical"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.myapplication.MainActivity" >
+    android:background="#F9F9EB"
+    tools:context=".registerCounsellor">
 
+    <TextView
+        android:id="@+id/textViewSignUpHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:background="#F9F9EB"
 
-    <LinearLayout
+        android:text="Sign Up"
+        android:textColor="@color/tan"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/userFname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:drawableRight="@drawable/ic_fullname"
+        android:ems="10"
+
+        android:hint="first name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSignUpHeading" />
+
+    <EditText
+        android:id="@+id/userLname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:drawableRight="@drawable/ic_fullname"
+        android:ems="10"
+
+        android:hint="last name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userFname" />
+
+    <EditText
+        android:id="@+id/userEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:drawableRight="@drawable/ic_email"
+        android:ems="10"
+
+        android:hint="email"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userLname" />
+
+    <EditText
+        android:id="@+id/UserpassWord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:drawableRight="@drawable/ic_password"
+        android:ems="10"
+
+        android:hint="password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userEmail" />
+    <EditText
+        android:id="@+id/cnsconfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:drawableRight="@drawable/ic_password"
+        android:ems="10"
+
+        android:hint="confirm password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/UserpassWord" />
+    <Spinner
+        android:id="@+id/spinner1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/tan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@android:drawable/btn_dropdown"
+        app:layout_constraintTop_toBottomOf="@+id/cnsconfirm"
+        android:spinnerMode="dropdown"/>
+    <Button
 
+        android:id="@+id/select_problems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/spinner1"
+        android:text="select problems"
+        android:backgroundTint="@color/tan"
+        android:textColor="@color/black"
+        />
 
-        <EditText
-            android:id="@+id/userFname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:hint="first name"
-            android:layout_marginTop="80dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="45dp" />
-        <EditText
-            android:id="@+id/userLname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:hint="last name"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="45dp" />
+    <Button
+        android:id="@+id/buttonSignUp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
 
-        <EditText
-            android:id="@+id/userEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:hint="email"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="45dp" />
+        android:text="SignUp"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/tan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cnsconfirm" />
 
-
-
-        <EditText
-            android:id="@+id/UserpassWord"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="password"
-            android:inputType="textPassword" />
-
-        <EditText
-            android:id="@+id/cnsconfirm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="confirm password"
-            android:inputType="textPassword" />
-
-        <Spinner
-            android:id="@+id/spinner1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown"/>
-        <Button
-
-            android:id="@+id/select_problems"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="select problems"
-            />
-
-
-        <Button
-
-            android:id="@+id/signUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="register as a counsellor"
-            android:layout_gravity="center"
-            />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/textViewToLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/login_here"
+        android:gravity="center_horizontal"
+        android:textSize="16sp"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSignUp" />
 
 
 
-</RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
