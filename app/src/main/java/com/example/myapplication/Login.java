@@ -21,6 +21,7 @@ import okhttp3.Response;
 public class Login {
 
     private String username, email, password, type, result, imageID, firstName, lastName;
+    private int userID, counsellorID;
     Login(String inEmail, String inPassword, String inType) {
         email = inEmail;
         password = inPassword;
@@ -59,9 +60,11 @@ public class Login {
                         if (type.equals("Users")) {
                             username = item.getString("Username");
                             imageID = item.getString("ImageID");
+                            userID = item.getInt("UserID");
                         } else if (type.equals("Counsellors")) {
                             firstName = item.getString("FirstName");
                             lastName = item.getString("LastName");
+                            counsellorID = item.getInt("CounsellorID");
                         }
                     }
                     if (email.equals(jsonEmail)) {
@@ -101,6 +104,14 @@ public class Login {
 
     public String getFirstName() {
         return firstName;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public int getCounsellorID() {
+        return counsellorID;
     }
 
     public String getLastName() {

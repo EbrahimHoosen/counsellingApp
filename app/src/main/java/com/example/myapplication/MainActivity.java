@@ -87,10 +87,10 @@ public class MainActivity extends AppCompatActivity {
                                         Toast.makeText(MainActivity.this, result, LENGTH_SHORT).show();
                                         if (result.equals("Login Successful")) {
                                             if (userType.equals("user")) {
-                                                User newLogin = new User(loginAttempt.getUsername(), loginAttempt.getEmail(), loginAttempt.getImageID());
+                                                User newLogin = new User(loginAttempt.getUsername(), loginAttempt.getEmail(), loginAttempt.getImageID(), loginAttempt.getUserID());
                                                 System.out.println(newLogin);
                                             } else if (userType.equals("counsellor")) {
-                                                Counsellor newLogin = new Counsellor(loginAttempt.getFirstName(), loginAttempt.getLastName(), loginAttempt.getEmail());
+                                                Counsellor newLogin = new Counsellor(loginAttempt.getFirstName(), loginAttempt.getLastName(), loginAttempt.getEmail(), loginAttempt.getCounsellorID());
                                                 System.out.println(newLogin);
                                             }
                                         }
