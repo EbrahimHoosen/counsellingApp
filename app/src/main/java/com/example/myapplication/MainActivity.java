@@ -118,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
         btnCreateAccountUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent instRegisterUser = new Intent(getApplicationContext(), registerUser.class);
-                startActivity(instRegisterUser);
+                Intent userRegPage = new Intent(getApplicationContext(), registerUser.class);
+                startActivity(userRegPage);
                 //createAccountDialog.dismiss();
             }
         });
@@ -129,8 +129,8 @@ public class MainActivity extends AppCompatActivity {
         btnCreateAccountCounsellor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent instRegisterCounsellor = new Intent(getApplicationContext(), registerCounsellor.class);
-                startActivity(instRegisterCounsellor);
+                Intent counsellorRegPage = new Intent(getApplicationContext(), registerCounsellor.class);
+                startActivity(counsellorRegPage);
                 //createAccountDialog.dismiss();
             }
         });

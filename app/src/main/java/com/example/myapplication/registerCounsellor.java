@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -105,11 +106,11 @@ public class registerCounsellor extends AppCompatActivity {
                                         jsonEmail = item.getString("EmailAddress");
                                     }
 
-                                    if (email.equals(jsonEmail)) { //email already in use
-                                        Toast.makeText(registerCounsellor.this, "Email Already In Use", Toast.LENGTH_SHORT).show();
-                                    } else { //email not in use
-                                        if (password.isEmpty() || email.isEmpty() || confirmPassword.isEmpty() || fname.isEmpty() || lname.isEmpty()) {
-                                            Toast.makeText(registerCounsellor.this, "Fields Cannot Be Left Empty", Toast.LENGTH_SHORT).show();
+                                    if (password.isEmpty() || email.isEmpty() || confirmPassword.isEmpty() || fname.isEmpty() || lname.isEmpty()) {
+                                        Toast.makeText(registerCounsellor.this, "Fields Cannot Be Left Empty", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        if (email.equals(jsonEmail)) { //email already in use
+                                            Toast.makeText(registerCounsellor.this, "Email Already In Use", Toast.LENGTH_SHORT).show();
                                         }
                                         else if (!password.equals(confirmPassword)) {
                                             Toast.makeText(registerCounsellor.this, "Passwords Do Not Match", Toast.LENGTH_SHORT).show();
@@ -137,6 +138,17 @@ public class registerCounsellor extends AppCompatActivity {
                 }));
             }
         });
+
+        TextView returnToLogin = (TextView) findViewById(R.id.textViewToLogin);
+
+        returnToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginPage = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(loginPage);
+            }
+        });
+
     }
     public void registerUser(String firstName, String lastName, String Email, String spinner, String Pass) {
 

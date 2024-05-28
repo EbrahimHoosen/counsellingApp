@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -97,18 +98,16 @@ public class registerUser extends AppCompatActivity {
                                         jsonUser = item.getString("Username");
                                     }
 
-                                    if (email.equals(jsonEmail)) { //email already in use
-                                        Toast.makeText(registerUser.this, "Email Already In Use", Toast.LENGTH_SHORT).show();
-                                    } else if (username.equals(jsonUser)) { //username already in use
-                                        Toast.makeText(registerUser.this, "Username Already In Use", Toast.LENGTH_SHORT).show();
-                                    } else { //email not in use
-                                        if (password.isEmpty() || email.isEmpty() || confirmPassword.isEmpty()) {
-                                            Toast.makeText(registerUser.this, "Fields Cannot Be Left Empty", Toast.LENGTH_SHORT).show();
-                                        }
-                                        else if (!password.equals(confirmPassword)) {
+                                    if (password.isEmpty() || email.isEmpty() || confirmPassword.isEmpty()) {
+                                        Toast.makeText(registerUser.this, "Fields Cannot Be Left Empty", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        if (email.equals(jsonEmail)) { //email already in use
+                                            Toast.makeText(registerUser.this, "Email Already In Use", Toast.LENGTH_SHORT).show();
+                                        } else if (username.equals(jsonUser)) { //username already in use
+                                            Toast.makeText(registerUser.this, "Username Already In Use", Toast.LENGTH_SHORT).show();
+                                        } else if (!password.equals(confirmPassword)) {
                                             Toast.makeText(registerUser.this, "Passwords Do Not Match", Toast.LENGTH_SHORT).show();
-                                        }
-                                        else {
+                                        } else {
                                             registerUser(username, email, password);
                                             Toast.makeText(registerUser.this, "Sign Up Successful", Toast.LENGTH_SHORT).show();
                                             Intent backToRegUser = new Intent(getApplicationContext(), MainActivity.class);
@@ -124,6 +123,15 @@ public class registerUser extends AppCompatActivity {
 
                     }
                 }));
+            }
+        });
+
+        TextView returnToLogin = (TextView) findViewById(R.id.textViewToLogin);
+        returnToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginPage = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(loginPage);
             }
         });
     }
