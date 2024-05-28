@@ -1,138 +1,144 @@
-<androidx.constraintlayout.widget.ConstraintLayout
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="#F9F9EB"
+    tools:context=".registerCounsellor">
 
     <TextView
-        android:id="@+id/txtRegistration"
+        android:id="@+id/textViewSignUpHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="serif-monospace"
-        android:text="@string/anonymous_counselling"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textSize="24sp"
-        android:textStyle="bold|italic"
-        android:typeface="normal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="110dp"
+        android:background="#F9F9EB"
+        android:text="Sign Up"
+        android:textColor="@color/tan"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
+    <EditText
+        android:id="@+id/counsellorFName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:drawableRight="@drawable/ic_fullname"
+        android:ems="10"
+
+        android:hint="first name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSignUpHeading" />
+
+    <EditText
+        android:id="@+id/counsellorLName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:drawableRight="@drawable/ic_fullname"
+        android:ems="10"
+
+        android:hint="last name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/counsellorFName" />
+
+    <EditText
+        android:id="@+id/counsellorEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:drawableRight="@drawable/ic_email"
+        android:ems="10"
+
+        android:hint="email"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/counsellorLName" />
+
+    <EditText
+        android:id="@+id/userPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:drawableRight="@drawable/ic_password"
+        android:ems="10"
+
+        android:hint="password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/counsellorEmail" />
+    <EditText
+        android:id="@+id/counsellorPConfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:drawableRight="@drawable/ic_password"
+        android:ems="10"
+
+        android:hint="confirm password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userPassword" />
+    <Spinner
+        android:id="@+id/spinner1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/txtRegistration">
-
-        <EditText
-            android:id="@+id/counsellorFName"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="15dp"
-            android:background="@drawable/text_bg"
-            android:ems="10"
-            android:hint="First Name"
-            android:inputType="text"
-            android:padding="7dp" />
-
-        <EditText
-            android:id="@+id/counsellorLName"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="15dp"
-            android:background="@drawable/text_bg"
-            android:ems="10"
-            android:hint="Last Name"
-            android:inputType="text"
-            android:padding="7dp" />
-
-        <EditText
-            android:id="@+id/counsellorEmail"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="15dp"
-            android:background="@drawable/text_bg"
-            android:ems="10"
-            android:hint="Email Address"
-            android:inputType="text"
-            android:padding="7dp" />
-
-        <EditText
-            android:id="@+id/userPassword"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="15dp"
-            android:background="@drawable/text_bg"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:padding="7dp" />
-
-        <EditText
-            android:id="@+id/counsellorPConfirm"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="15dp"
-            android:background="@drawable/text_bg"
-            android:ems="10"
-            android:hint="Confirm Password"
-            android:inputType="textPassword"
-            android:padding="7dp" />
-
-        <Spinner
-            android:id="@+id/spinner1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="15dp"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/select_problems"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="select problems"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/white"
-        app:strokeColor="@color/black"
-        app:strokeWidth="1dp"
+        android:backgroundTint="@color/tan"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="15dp"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout3"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@android:drawable/btn_dropdown"
+        app:layout_constraintTop_toBottomOf="@+id/counsellorPConfirm"
+        android:spinnerMode="dropdown"/>
+    <Button
+
+        android:id="@+id/select_problems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/spinner1"
+        android:text="select problems"
+        android:backgroundTint="@color/tan"
+        android:textColor="@color/black"
+        />
 
     <Button
         android:id="@+id/signUp"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="register as a counsellor"
+        android:layout_marginTop="120dp"
+
+        android:text="SignUp"
         android:textColor="@color/black"
-        android:backgroundTint="@color/white"
-        app:strokeColor="@color/black"
-        app:strokeWidth="1dp"
+        app:backgroundTint="@color/tan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/counsellorPConfirm" />
+
+    <TextView
+        android:id="@+id/textViewToLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/txtRegistration"
-        app:layout_constraintStart_toStartOf="@+id/txtRegistration"
-        app:layout_constraintTop_toBottomOf="@+id/select_problems" />
+        android:text="@string/login_here"
+        android:gravity="center_horizontal"
+        android:textSize="16sp"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signUp" />
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
