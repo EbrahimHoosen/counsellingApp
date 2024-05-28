@@ -3,6 +3,7 @@
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#F9F9EB"
     android:layout_height="match_parent"
     tools:context="com.example.myapplication.MainActivity" >
     <TextView
@@ -15,26 +16,27 @@
         android:layout_marginStart="18dp"
         android:layout_marginEnd="17dp"
         android:layout_marginBottom="675dp"
-        android:fontFamily="serif-monospace"
+
         android:text="select problems"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textSize="24sp"
-        android:textStyle="bold|italic"
+        android:textStyle="italic"
         android:typeface="normal" />
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <CheckBox android:id="@+id/checkbox_depression"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="depression" />
-    <CheckBox android:id="@+id/checkbox_anxiety"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="anxiety"/>
+        <CheckBox android:id="@+id/checkbox_depression"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:text="depression" />
+        <CheckBox android:id="@+id/checkbox_anxiety"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="anxiety"/>
         <CheckBox android:id="@+id/checkbox_PTSD"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,17 +45,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="phobias"/>
+        <CheckBox android:id="@+id/checkbox_addiction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="addiction"/>
+        <CheckBox android:id="@+id/checkbox_paranoia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="paranoia" />
+        <CheckBox android:id="@+id/checkbox_insomnia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="insomnia" />
         <CheckBox android:id="@+id/checkbox_other"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="other" />
-        <CheckBox android:id="@+id/checkbox_cheese"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cheese"/>
         <Button
             android:id="@+id/confirm_button"
             android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/tan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="confirm"

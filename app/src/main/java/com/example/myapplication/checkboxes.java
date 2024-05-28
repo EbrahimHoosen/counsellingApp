@@ -22,18 +22,22 @@ public class checkboxes extends AppCompatActivity {
 
         confirm = findViewById(R.id.confirm_button);
         CheckBox otherCheckbox = findViewById(R.id.checkbox_other);
-        CheckBox cheeseCheckbox = findViewById(R.id.checkbox_cheese);
+        CheckBox paranoiaCheckbox = findViewById(R.id.checkbox_paranoia);
         CheckBox depressionCheckbox = findViewById(R.id.checkbox_depression);
         CheckBox PTSDCheckbox = findViewById(R.id.checkbox_PTSD);
         CheckBox phobiasCheckbox = findViewById(R.id.checkbox_phobias);
         CheckBox anxietyCheckbox = findViewById(R.id.checkbox_anxiety);
+        CheckBox addictionCheckbox = findViewById(R.id.checkbox_addiction);
+        CheckBox insomniaCheckbox = findViewById(R.id.checkbox_insomnia);
 
         otherCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
-        cheeseCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
+        anxietyCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
         depressionCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
         PTSDCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
         phobiasCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
-        anxietyCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
+        addictionCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
+        paranoiaCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
+        insomniaCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
