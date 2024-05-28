@@ -36,7 +36,7 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
     private Dialog createAccountDialog;
-    private String email, password;
+    private String email, password, userType;
     private Login loginAttempt;
 
     @Override
@@ -72,9 +72,11 @@ public class MainActivity extends AppCompatActivity {
                         if (user.isChecked()) {
                             //Creates an instance of the Login class to verify User credentials
                             loginAttempt = new Login(email, password, "Users");
+                            userType = "user";
                         } else if (counsellor.isChecked()) {
                             //Creates an instance of the Login class to verify Counsellor credentials
                             loginAttempt = new Login(email, password, "Counsellors");
+                            userType = "counsellor";
                         }
                         loginAttempt.login(new Login.LoginCallback() {
                             @Override
@@ -83,6 +85,16 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         Toast.makeText(MainActivity.this, result, LENGTH_SHORT).show();
+                                        if (result.equals("Login Successful")) {
+                                            if (userType.equals("user")) {
+                                                User newLogin = new User(loginAttempt.getUsername(), loginAttempt.getEmail(), loginAttempt.getImageID());
+                                                System.out.println(newLogin);
+                                            } else if (userType.equals("counsellor")) {
+                                                Counsellor newLogin = new Counsellor(loginAttempt.getFirstName(), loginAttempt.getLastName(), loginAttempt.getEmail());
+                                                System.out.println(newLogin);
+                                            }
+                                        }
+                                        // Add code to take to chatUI here
                                     }
                                 });
                             }

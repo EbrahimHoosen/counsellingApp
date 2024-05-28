@@ -20,7 +20,7 @@ import okhttp3.Response;
 
 public class Login {
 
-    private String email, password, type, result;
+    private String username, email, password, type, result, imageID, firstName, lastName;
     Login(String inEmail, String inPassword, String inType) {
         email = inEmail;
         password = inPassword;
@@ -53,8 +53,17 @@ public class Login {
                 try {
                     JSONArray all = new JSONArray(responseData);
                     String jsonEmail = "";
-                    JSONObject item = all.getJSONObject(0);
-                    jsonEmail = item.getString("EmailAddress");
+                    for (int i = 0; i < all.length(); i++) {
+                        JSONObject item = all.getJSONObject(i);
+                        jsonEmail = item.getString("EmailAddress");
+                        if (type.equals("Users")) {
+                            username = item.getString("Username");
+                            imageID = item.getString("ImageID");
+                        } else if (type.equals("Counsellors")) {
+                            firstName = item.getString("FirstName");
+                            lastName = item.getString("LastName");
+                        }
+                    }
                     if (email.equals(jsonEmail)) {
                         result = "Login Successful";
                     } else {
@@ -76,5 +85,25 @@ public class Login {
 
     public interface LoginCallback {
         void onResult(String result);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getImageID() {
+        return imageID;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 }

@@ -24,11 +24,10 @@
     <EditText
         android:id="@+id/counsellorFName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="40dp"
         android:drawableRight="@drawable/ic_fullname"
         android:ems="10"
-
         android:hint="first name"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,11 +37,10 @@
     <EditText
         android:id="@+id/counsellorLName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="11dp"
         android:drawableRight="@drawable/ic_fullname"
         android:ems="10"
-
         android:hint="last name"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,11 +50,10 @@
     <EditText
         android:id="@+id/counsellorEmail"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="11dp"
         android:drawableRight="@drawable/ic_email"
         android:ems="10"
-
         android:hint="email"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,57 +63,55 @@
     <EditText
         android:id="@+id/userPassword"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="11dp"
         android:drawableRight="@drawable/ic_password"
         android:ems="10"
-
         android:hint="password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/counsellorEmail" />
+
     <EditText
         android:id="@+id/counsellorPConfirm"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="11dp"
         android:drawableRight="@drawable/ic_password"
         android:ems="10"
-
         android:hint="confirm password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userPassword" />
+
     <Spinner
         android:id="@+id/spinner1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/tan"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@android:drawable/btn_dropdown"
-        app:layout_constraintTop_toBottomOf="@+id/counsellorPConfirm"
-        android:spinnerMode="dropdown"/>
-    <Button
+        app:layout_constraintTop_toBottomOf="@+id/counsellorPConfirm" />
 
+    <Button
         android:id="@+id/select_problems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/spinner1"
         android:text="select problems"
         android:backgroundTint="@color/tan"
         android:textColor="@color/black"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/spinner1" />
 
     <Button
-        android:id="@+id/signUp"
         style="@style/Widget.AppCompat.Button.Colored"
+        android:id="@+id/signUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
-
         android:text="SignUp"
         android:textColor="@color/black"
         app:backgroundTint="@color/tan"
@@ -127,7 +122,7 @@
     <TextView
         android:id="@+id/textViewToLogin"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="20dp"
         android:text="@string/login_here"
         android:gravity="center_horizontal"
@@ -136,9 +131,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signUp" />
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

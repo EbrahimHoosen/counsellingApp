@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="140dp"
         android:background="#F9F9EB"
-
         android:text="Login"
         android:textColor="@color/tan"
         android:textSize="30sp"
@@ -25,11 +24,10 @@
     <EditText
         android:id="@+id/txtEmail"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="70dp"
         android:drawableRight="@drawable/ic_username"
         android:ems="10"
-
         android:hint="email"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,16 +37,16 @@
     <EditText
         android:id="@+id/txtPassword"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="11dp"
         android:drawableRight="@drawable/ic_password"
         android:ems="10"
-
         android:hint="password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
+
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
@@ -64,7 +62,6 @@
             android:id="@+id/radioUser"
             android:layout_width="108dp"
             android:layout_height="wrap_content"
-
             android:text="User"
             android:textColor="@android:color/black" />
 
@@ -72,18 +69,17 @@
             android:id="@+id/radioCounsellor"
             android:layout_width="125dp"
             android:layout_height="wrap_content"
-
             android:text="Counsellor"
             android:textColor="@android:color/black" />
+
     </RadioGroup>
 
     <Button
-        android:id="@+id/btnLogin"
         style="@style/Widget.AppCompat.Button.Colored"
+        android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-
         android:text="Login"
         android:textColor="@color/black"
         app:backgroundTint="@color/tan"
@@ -96,7 +92,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-
         android:gravity="center_horizontal"
         android:text="@string/sign_up_here"
         android:textSize="16sp"
@@ -109,7 +104,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-
         android:gravity="center_horizontal"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
