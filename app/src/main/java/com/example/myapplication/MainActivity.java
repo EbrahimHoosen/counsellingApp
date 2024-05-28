@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -131,8 +132,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Initializes the create account dialog popup
-        Button btnCreateAccount = findViewById(R.id.btnCreateAccount);
-        btnCreateAccount.setOnClickListener(new View.OnClickListener() {
+        TextView stringToSignUpPage = findViewById(R.id.textViewToSignUp);
+        stringToSignUpPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createAccountDialog.show();

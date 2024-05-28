@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="anonymous_counselling">Anonymous Counselling</string>
+    <string name="login_here">Already have an account?<u> Login here</u></string>
+    <string name="sign_up_here">New?<u> Sign up here</u></string>
     <string name="login">Login</string>
 
 </resources>
