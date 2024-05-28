@@ -55,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
         EditText email_txt = (EditText) findViewById(R.id.txtEmail);
         EditText password_txt = (EditText) findViewById(R.id.txtPassword);
-        email = email_txt.getText().toString();
-        password = password_txt.getText().toString();
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
