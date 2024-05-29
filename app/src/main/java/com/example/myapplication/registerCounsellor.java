@@ -1,10 +1,14 @@
 package com.example.myapplication;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -19,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -30,12 +35,20 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class registerCounsellor extends AppCompatActivity {
+
+    Dialog problemSelectDialog;
+    ArrayList<Integer> problems = new ArrayList<>();
     EditText txtFirstName, txtLastName, txtEmail, txtPassword, txtConfirmPassword;
     Button counsellorSignUp, selectProblems;
     OkHttpClient client;
     final String url_Register = "https://lamp.ms.wits.ac.za/home/s2663134/counsellorReg.php";
     final String url_counsellorExists = "https://lamp.ms.wits.ac.za/home/s2663134/counsellorExists.php";
+
+    final String url_getID = "https://lamp.ms.wits.ac.za/home/s2663134/getCID.php";
+    final String url_insertProblems = "https://lamp.ms.wits.ac.za/home/s2663134/insertCProblems.php";
     String fname, lname, email, password, confirmPassword;
+
+    int counsellorID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +56,7 @@ public class registerCounsellor extends AppCompatActivity {
         setContentView(R.layout.activity_register_counsellor);
 
         client = new OkHttpClient();
+
         txtFirstName = (EditText) findViewById(R.id.counsellorFName);
         txtLastName = (EditText) findViewById(R.id.counsellorLName);
         txtEmail = (EditText) findViewById(R.id.counsellorEmail);
@@ -57,11 +71,45 @@ public class registerCounsellor extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
         //dropdown.setPrompt("select qualification");
+
+        problemSelectDialog = new Dialog(registerCounsellor.this);
+        problemSelectDialog.setContentView(R.layout.problems_dialog);
+        problemSelectDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        problemSelectDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.create_account_bg));
+        problemSelectDialog.setCancelable(true);
+
+        CheckBox cbxDepression = problemSelectDialog.findViewById(R.id.checkbox_depression);
+        CheckBox cbxAnxiety = problemSelectDialog.findViewById(R.id.checkbox_anxiety);
+        CheckBox cbxPTSD = problemSelectDialog.findViewById(R.id.checkbox_PTSD);
+        CheckBox cbxAddiction = problemSelectDialog.findViewById(R.id.checkbox_addiction);
+        CheckBox cbxParanoia = problemSelectDialog.findViewById(R.id.checkbox_paranoia);
+        CheckBox cbxInsomnia = problemSelectDialog.findViewById(R.id.checkbox_insomnia);
+        CheckBox cbxBodyDysmorphia = problemSelectDialog.findViewById(R.id.checkbox_bodyDysmorphia);
+        CheckBox cbxBPD = problemSelectDialog.findViewById(R.id.checkbox_bpd);
+        CheckBox cbxSchizo = problemSelectDialog.findViewById(R.id.checkbox_schizo);
+
+        Button confirmProblems = problemSelectDialog.findViewById(R.id.confirm_button);
+
+        confirmProblems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cbxDepression.isChecked()) problems.add(1);
+                if (cbxAnxiety.isChecked()) problems.add(2);
+                if (cbxPTSD.isChecked()) problems.add(3);
+                if (cbxAddiction.isChecked()) problems.add(4);
+                if (cbxParanoia.isChecked()) problems.add(5);
+                if (cbxInsomnia.isChecked()) problems.add(6);
+                if (cbxBodyDysmorphia.isChecked()) problems.add(7);
+                if (cbxBPD.isChecked()) problems.add(8);
+                if (cbxSchizo.isChecked()) problems.add(9);
+                problemSelectDialog.dismiss();
+            }
+        });
+
         selectProblems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), checkboxes.class);
-                startActivity(i);
+                problemSelectDialog.show();
             }
         });
 
@@ -115,13 +163,14 @@ public class registerCounsellor extends AppCompatActivity {
                                         else if (!password.equals(confirmPassword)) {
                                             Toast.makeText(registerCounsellor.this, "Passwords Do Not Match", Toast.LENGTH_SHORT).show();
                                         }
-                                        else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                                        else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                                             Toast.makeText(registerCounsellor.this, "Invalid Email Address", Toast.LENGTH_SHORT).show();
                                         }
                                         else if (spinnerString.equals("select qualification")) {
                                             Toast.makeText(registerCounsellor.this, "Please Select A Qualification", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            registerUser(fname, lname, email,spinnerString, password);
+                                            registerUser(fname, lname, email, spinnerString, password);
+                                            //insertProblems(email);
                                             Toast.makeText(registerCounsellor.this, "Sign Up Successful", Toast.LENGTH_SHORT).show();
                                             Intent backToRegCounsellor = new Intent(getApplicationContext(), MainActivity.class);
                                             startActivity(backToRegCounsellor);
@@ -164,6 +213,7 @@ public class registerCounsellor extends AppCompatActivity {
                 .post(requestBody)
                 .build();
 
+        System.out.println(request.toString());
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -177,7 +227,81 @@ public class registerCounsellor extends AppCompatActivity {
                     public void run() {
                         try {
                             String jsonResponse = response.body().string();
-                            System.out.println(jsonResponse);
+                            System.out.println("INSERT INTO TABLE COUNSELLORS: " + jsonResponse);
+                            HttpUrl.Builder urlID = HttpUrl.parse(url_getID).newBuilder();
+                            urlID.addQueryParameter("email", email);
+
+                            String url1 = urlID.build().toString();
+
+                            Request reqID = new Request.Builder().url(url1).build();
+
+                            client.newCall(reqID).enqueue(new Callback() {
+                                @Override
+                                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                @Override
+                                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                                    System.out.println("CORRECT EMAIL FOUND");
+                                    final String responseData = response.body().string();
+                                    System.out.println(responseData);
+                                    try {
+                                        JSONArray all = new JSONArray(responseData);
+                                        int jsonID = 0;
+                                        for (int i = 0; i < all.length(); i++) {
+                                            JSONObject item = all.getJSONObject(i);
+                                            jsonID = item.getInt("CounsellorID");
+                                            System.out.println(jsonID);
+                                        }
+                                        counsellorID = jsonID;
+                                        System.out.println("IN LOOP COUNSELLOR ID: " + counsellorID);
+                                    } catch (JSONException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }
+                            });
+
+                            System.out.println("COUNSELLOR ID: " + counsellorID);
+
+                            System.out.println("INSERTING PROBLEMS");
+                            System.out.println("Email: " + email);
+
+                            HttpUrl.Builder urlBuilder = HttpUrl.parse(url_insertProblems).newBuilder();
+                            urlBuilder.addQueryParameter("cID", String.valueOf(counsellorID));
+
+                            for (int i = 0; i < problems.size(); i++) {
+
+                                urlBuilder.addQueryParameter("problem", String.valueOf(problems.get(i)));
+                                String url = urlBuilder.build().toString();
+                                System.out.println(url);
+
+                                Request req = new Request.Builder().url(url).build();
+
+                                client.newCall(req).enqueue(new Callback() {
+                                    @Override
+                                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    @Override
+                                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                try {
+                                                    String jsonResponse = response.body().string();
+                                                    System.out.println("ISNERT INTO TABLE PROBLEMS: " + jsonResponse);
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+
+                                urlBuilder.removeAllQueryParameters("problem");
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -185,6 +309,85 @@ public class registerCounsellor extends AppCompatActivity {
                 });
             }
         });
+
+    }
+
+    public void insertProblems(String email) {
+
+        HttpUrl.Builder urlID = HttpUrl.parse(url_getID).newBuilder();
+        urlID.addQueryParameter("email", email);
+
+        String url1 = urlID.build().toString();
+
+        Request reqID = new Request.Builder().url(url1).build();
+
+        client.newCall(reqID).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                System.out.println("CORRECT EMAIL FOUND");
+                final String responseData = response.body().string();
+                System.out.println(responseData);
+                try {
+                    JSONArray all = new JSONArray(responseData);
+                    int jsonID = 0;
+                    for (int i = 0; i < all.length(); i++) {
+                        JSONObject item = all.getJSONObject(i);
+                        jsonID = item.getInt("CounsellorID");
+                        System.out.println(jsonID);
+                    }
+                    counsellorID = jsonID;
+                    System.out.println("IN LOOP COUNSELLOR ID: " + counsellorID);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        System.out.println("COUNSELLOR ID: " + counsellorID);
+
+        System.out.println("INSERTING PROBLEMS");
+        System.out.println("Email: " + email);
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(url_insertProblems).newBuilder();
+        urlBuilder.addQueryParameter("cID", String.valueOf(counsellorID));
+
+        for (int i = 0; i < problems.size(); i++) {
+
+            urlBuilder.addQueryParameter("problem", String.valueOf(problems.get(i)));
+            String url = urlBuilder.build().toString();
+            System.out.println(url);
+
+            Request req = new Request.Builder().url(url).build();
+
+            client.newCall(req).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                String jsonResponse = response.body().string();
+                                System.out.println("ISNERT INTO TABLE PROBLEMS: " + jsonResponse);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            });
+
+            urlBuilder.removeAllQueryParameters("problem");
+        }
 
     }
 }
