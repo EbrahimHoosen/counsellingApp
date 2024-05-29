@@ -1,10 +1,13 @@
 package com.example.myapplication;
 
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 import okhttp3.Call;
@@ -30,12 +34,17 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class registerUser extends AppCompatActivity {
+    Dialog problemSelectDialog;
+    ArrayList<Integer> problems = new ArrayList<>();
     EditText txtUsername, txtEmail, txtPassword, txtConfirmPassword;
-    Button UserSignUp, select_items;
+    Button UserSignUp, selectProblems;
     OkHttpClient client;
     final String url_Register= "https://lamp.ms.wits.ac.za/home/s2663134/userReg.php";
     final String url_userExists = "https://lamp.ms.wits.ac.za/home/s2663134/userExists.php";
+    final String url_getID = "https://lamp.ms.wits.ac.za/home/s2663134/getUserID.php";
+    final String url_insertProblems = "https://lamp.ms.wits.ac.za/home/s2663134/insertUProblems.php";
     String username, email, password, confirmPassword;
+    int userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +56,46 @@ public class registerUser extends AppCompatActivity {
         txtPassword = (EditText) findViewById(R.id.userPassword);
         txtConfirmPassword = (EditText) findViewById(R.id.userPConfirm);
         UserSignUp = (Button) findViewById(R.id.btnUserSignUp);
-        select_items = findViewById(R.id.select_problems);
+        selectProblems = findViewById(R.id.select_problems);
 
-        select_items.setOnClickListener(new View.OnClickListener() {
+        problemSelectDialog = new Dialog(registerUser.this);
+        problemSelectDialog.setContentView(R.layout.problems_dialog);
+        problemSelectDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        problemSelectDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.create_account_bg));
+        problemSelectDialog.setCancelable(true);
+
+        CheckBox cbxDepression = problemSelectDialog.findViewById(R.id.checkbox_depression);
+        CheckBox cbxAnxiety = problemSelectDialog.findViewById(R.id.checkbox_anxiety);
+        CheckBox cbxPTSD = problemSelectDialog.findViewById(R.id.checkbox_PTSD);
+        CheckBox cbxAddiction = problemSelectDialog.findViewById(R.id.checkbox_addiction);
+        CheckBox cbxParanoia = problemSelectDialog.findViewById(R.id.checkbox_paranoia);
+        CheckBox cbxInsomnia = problemSelectDialog.findViewById(R.id.checkbox_insomnia);
+        CheckBox cbxBodyDysmorphia = problemSelectDialog.findViewById(R.id.checkbox_bodyDysmorphia);
+        CheckBox cbxBPD = problemSelectDialog.findViewById(R.id.checkbox_bpd);
+        CheckBox cbxSchizo = problemSelectDialog.findViewById(R.id.checkbox_schizo);
+
+        Button confirmProblems = problemSelectDialog.findViewById(R.id.confirm_button);
+
+        confirmProblems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent j = new Intent(getApplicationContext(), checkboxes.class);
-                startActivity(j);
+                if (cbxDepression.isChecked()) problems.add(1);
+                if (cbxAnxiety.isChecked()) problems.add(2);
+                if (cbxPTSD.isChecked()) problems.add(3);
+                if (cbxAddiction.isChecked()) problems.add(4);
+                if (cbxParanoia.isChecked()) problems.add(5);
+                if (cbxInsomnia.isChecked()) problems.add(6);
+                if (cbxBodyDysmorphia.isChecked()) problems.add(7);
+                if (cbxBPD.isChecked()) problems.add(8);
+                if (cbxSchizo.isChecked()) problems.add(9);
+                problemSelectDialog.dismiss();
+            }
+        });
+
+        selectProblems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                problemSelectDialog.show();
             }
         });
 
@@ -161,7 +203,68 @@ public class registerUser extends AppCompatActivity {
                     public void run() {
                         try {
                             String jsonResponse = response.body().string();
-                            System.out.println(jsonResponse);
+                            HttpUrl.Builder urlID = HttpUrl.parse(url_getID).newBuilder();
+                            urlID.addQueryParameter("email", email);
+
+                            String url1 = urlID.build().toString();
+
+                            Request reqID = new Request.Builder().url(url1).build();
+
+                            client.newCall(reqID).enqueue(new Callback() {
+                                @Override
+                                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                @Override
+                                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                                    final String responseData = response.body().string();
+                                    try {
+                                        JSONArray all = new JSONArray(responseData);
+                                        int jsonID = 0;
+                                        for (int i = 0; i < all.length(); i++) {
+                                            JSONObject item = all.getJSONObject(i);
+                                            jsonID = item.getInt("UserID");
+                                        }
+                                        userID = jsonID;
+
+                                        HttpUrl.Builder urlBuilder = HttpUrl.parse(url_insertProblems).newBuilder();
+                                        urlBuilder.addQueryParameter("uID", String.valueOf(userID));
+
+                                        for (int i = 0; i < problems.size(); i++) {
+
+                                            urlBuilder.addQueryParameter("problem", String.valueOf(problems.get(i)));
+                                            String url = urlBuilder.build().toString();
+
+                                            Request req = new Request.Builder().url(url).build();
+
+                                            client.newCall(req).enqueue(new Callback() {
+                                                @Override
+                                                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                                                    e.printStackTrace();
+                                                }
+
+                                                @Override
+                                                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            try {
+                                                                String jsonResponse = response.body().string();
+                                                            } catch (IOException e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                            urlBuilder.removeAllQueryParameters("problem");
+                                        }
+                                    } catch (JSONException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }
+                            });
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

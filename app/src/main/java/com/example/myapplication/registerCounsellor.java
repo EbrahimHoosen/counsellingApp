@@ -169,8 +169,7 @@ public class registerCounsellor extends AppCompatActivity {
                                         else if (spinnerString.equals("select qualification")) {
                                             Toast.makeText(registerCounsellor.this, "Please Select A Qualification", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            registerUser(fname, lname, email, spinnerString, password);
-                                            //insertProblems(email);
+                                            registerCounsellor(fname, lname, email, spinnerString, password);
                                             Toast.makeText(registerCounsellor.this, "Sign Up Successful", Toast.LENGTH_SHORT).show();
                                             Intent backToRegCounsellor = new Intent(getApplicationContext(), MainActivity.class);
                                             startActivity(backToRegCounsellor);
@@ -199,7 +198,7 @@ public class registerCounsellor extends AppCompatActivity {
         });
 
     }
-    public void registerUser(String firstName, String lastName, String Email, String spinner, String Pass) {
+    public void registerCounsellor(String firstName, String lastName, String Email, String spinner, String Pass) {
 
         RequestBody requestBody = new FormBody.Builder()
                 .add("first_name", firstName)
@@ -227,7 +226,6 @@ public class registerCounsellor extends AppCompatActivity {
                     public void run() {
                         try {
                             String jsonResponse = response.body().string();
-                            System.out.println("INSERT INTO TABLE COUNSELLORS: " + jsonResponse);
                             HttpUrl.Builder urlID = HttpUrl.parse(url_getID).newBuilder();
                             urlID.addQueryParameter("email", email);
 
@@ -243,65 +241,54 @@ public class registerCounsellor extends AppCompatActivity {
 
                                 @Override
                                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                                    System.out.println("CORRECT EMAIL FOUND");
                                     final String responseData = response.body().string();
-                                    System.out.println(responseData);
                                     try {
                                         JSONArray all = new JSONArray(responseData);
                                         int jsonID = 0;
                                         for (int i = 0; i < all.length(); i++) {
                                             JSONObject item = all.getJSONObject(i);
                                             jsonID = item.getInt("CounsellorID");
-                                            System.out.println(jsonID);
                                         }
                                         counsellorID = jsonID;
-                                        System.out.println("IN LOOP COUNSELLOR ID: " + counsellorID);
+
+                                        HttpUrl.Builder urlBuilder = HttpUrl.parse(url_insertProblems).newBuilder();
+                                        urlBuilder.addQueryParameter("cID", String.valueOf(counsellorID));
+
+                                        for (int i = 0; i < problems.size(); i++) {
+
+                                            urlBuilder.addQueryParameter("problem", String.valueOf(problems.get(i)));
+                                            String url = urlBuilder.build().toString();
+
+                                            Request req = new Request.Builder().url(url).build();
+
+                                            client.newCall(req).enqueue(new Callback() {
+                                                @Override
+                                                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                                                    e.printStackTrace();
+                                                }
+
+                                                @Override
+                                                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            try {
+                                                                String jsonResponse = response.body().string();
+                                                            } catch (IOException e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                            urlBuilder.removeAllQueryParameters("problem");
+                                        }
                                     } catch (JSONException e) {
                                         throw new RuntimeException(e);
                                     }
                                 }
                             });
 
-                            System.out.println("COUNSELLOR ID: " + counsellorID);
-
-                            System.out.println("INSERTING PROBLEMS");
-                            System.out.println("Email: " + email);
-
-                            HttpUrl.Builder urlBuilder = HttpUrl.parse(url_insertProblems).newBuilder();
-                            urlBuilder.addQueryParameter("cID", String.valueOf(counsellorID));
-
-                            for (int i = 0; i < problems.size(); i++) {
-
-                                urlBuilder.addQueryParameter("problem", String.valueOf(problems.get(i)));
-                                String url = urlBuilder.build().toString();
-                                System.out.println(url);
-
-                                Request req = new Request.Builder().url(url).build();
-
-                                client.newCall(req).enqueue(new Callback() {
-                                    @Override
-                                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                    @Override
-                                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                try {
-                                                    String jsonResponse = response.body().string();
-                                                    System.out.println("ISNERT INTO TABLE PROBLEMS: " + jsonResponse);
-                                                } catch (IOException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        });
-                                    }
-                                });
-
-                                urlBuilder.removeAllQueryParameters("problem");
-                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -312,82 +299,4 @@ public class registerCounsellor extends AppCompatActivity {
 
     }
 
-    public void insertProblems(String email) {
-
-        HttpUrl.Builder urlID = HttpUrl.parse(url_getID).newBuilder();
-        urlID.addQueryParameter("email", email);
-
-        String url1 = urlID.build().toString();
-
-        Request reqID = new Request.Builder().url(url1).build();
-
-        client.newCall(reqID).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                System.out.println("CORRECT EMAIL FOUND");
-                final String responseData = response.body().string();
-                System.out.println(responseData);
-                try {
-                    JSONArray all = new JSONArray(responseData);
-                    int jsonID = 0;
-                    for (int i = 0; i < all.length(); i++) {
-                        JSONObject item = all.getJSONObject(i);
-                        jsonID = item.getInt("CounsellorID");
-                        System.out.println(jsonID);
-                    }
-                    counsellorID = jsonID;
-                    System.out.println("IN LOOP COUNSELLOR ID: " + counsellorID);
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-        System.out.println("COUNSELLOR ID: " + counsellorID);
-
-        System.out.println("INSERTING PROBLEMS");
-        System.out.println("Email: " + email);
-
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(url_insertProblems).newBuilder();
-        urlBuilder.addQueryParameter("cID", String.valueOf(counsellorID));
-
-        for (int i = 0; i < problems.size(); i++) {
-
-            urlBuilder.addQueryParameter("problem", String.valueOf(problems.get(i)));
-            String url = urlBuilder.build().toString();
-            System.out.println(url);
-
-            Request req = new Request.Builder().url(url).build();
-
-            client.newCall(req).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    e.printStackTrace();
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                String jsonResponse = response.body().string();
-                                System.out.println("ISNERT INTO TABLE PROBLEMS: " + jsonResponse);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                }
-            });
-
-            urlBuilder.removeAllQueryParameters("problem");
-        }
-
-    }
 }
