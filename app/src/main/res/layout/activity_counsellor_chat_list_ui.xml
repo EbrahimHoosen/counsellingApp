@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:background="#F9F9EB"
+
+    android:layout_height="match_parent"
+    tools:context=".UserChatListUI">
+    <TextView
+        android:id="@+id/settingsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/ic_settings"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/textViewCounsellorChats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:background="#F9F9EB"
+        android:text="chats"
+        android:textColor="@color/tan"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:backgroundTint="@color/tan"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textData"
+        android:text="Button" />
+
+    <TextView
+        android:id="@+id/textData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_background"
+        android:clickable="true"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:padding="30dp"
+        android:layout_marginTop="30dp"
+        android:text="user1"
+        android:alpha="0.5"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCounsellorChats" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

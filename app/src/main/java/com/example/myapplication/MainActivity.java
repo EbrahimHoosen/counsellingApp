@@ -3,7 +3,9 @@ package com.example.myapplication;
 import static android.widget.Toast.LENGTH_SHORT;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,9 +90,21 @@ public class MainActivity extends AppCompatActivity {
                                         if (result.equals("Login Successful")) {
                                             if (userType.equals("user")) {
                                                 User newLogin = new User(loginAttempt.getUsername(), loginAttempt.getEmail(), loginAttempt.getImageID(), loginAttempt.getUserID());
+                                                Intent userChatListUI = new Intent(getApplicationContext(), UserChatListUI.class);
+                                                startActivity(userChatListUI);
+                                                SharedPreferences sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);// this is how you store the value of username to compare it in the php
+                                                SharedPreferences.Editor editor = sharedPref.edit();
+                                                editor.putString("EmailAddress", email);// put the actual input email value so it can be saved and used in UserChatList
+                                                editor.apply();
                                                 System.out.println(newLogin);
                                             } else if (userType.equals("counsellor")) {
                                                 Counsellor newLogin = new Counsellor(loginAttempt.getFirstName(), loginAttempt.getLastName(), loginAttempt.getEmail(), loginAttempt.getCounsellorID());
+                                                Intent counsellorChatListUI = new Intent(getApplicationContext(), CounsellorChatListUI.class);
+                                                startActivity(counsellorChatListUI);
+                                                SharedPreferences sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);// this is how you store the value of username to compare it in the php
+                                                SharedPreferences.Editor editor = sharedPref.edit();
+                                                editor.putString("EmailAddress", email);// put the actual input email value so it can be saved and used in UserChatList
+                                                editor.apply();
                                                 System.out.println(newLogin);
                                             }
                                         }

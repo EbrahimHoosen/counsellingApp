@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:background="#F9F9EB"
+    android:layout_height="match_parent"
+    tools:context=".settings">
+    <TextView
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_back"
+        android:layout_marginStart="-350dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Back"
+        android:paddingTop="20dp"/>
+    <TextView
+        android:id="@+id/settingsHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:background="#F9F9EB"
+        android:text="settings"
+        android:textColor="@color/tan"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/imageSet"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:backgroundTint="@color/blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/settingsHeading"
+        android:text="set profile pic"/>
+    <Button
+        android:id="@+id/moodSet"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:backgroundTint="@color/blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageSet"
+        android:layout_height="wrap_content"
+        android:text="select mood"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/logOut"
+        android:gravity="center"
+        android:backgroundTint="@color/blue"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/moodSet"
+        android:text="log out"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
