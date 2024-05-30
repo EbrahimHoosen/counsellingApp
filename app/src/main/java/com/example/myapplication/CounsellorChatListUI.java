@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -30,6 +33,7 @@ import okhttp3.Response;
 public class CounsellorChatListUI extends AppCompatActivity {
     OkHttpClient client;
     TextView textView, settings;
+    LinearLayout layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +42,7 @@ public class CounsellorChatListUI extends AppCompatActivity {
 
         Button buttonGet = findViewById(R.id.button2);
         client = new OkHttpClient();
-        textView = findViewById(R.id.textData);
+        //textView = findViewById(R.id.textData);
         settings = findViewById(R.id.settingsTextView);
         SharedPreferences sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
         String email = sharedPref.getString("EmailAddress", null);//shared preference is how i keep track of the stored email and can tell which user is logged in
@@ -82,7 +86,7 @@ public class CounsellorChatListUI extends AppCompatActivity {
                         try {
 
                             String jsonResponse = response.body().string();
-                            textView.setText(jsonResponse);
+                            //textView.setText(jsonResponse);
                             processJSON(jsonResponse);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -94,19 +98,43 @@ public class CounsellorChatListUI extends AppCompatActivity {
         });
     }
     public void processJSON(String json){
+        System.out.println("Processing JSON");
+        layout = (LinearLayout) findViewById(R.id.listChats);
         try {
             JSONArray all = new JSONArray(json);
             StringBuilder test = new StringBuilder();
             for (int i=0; i<all.length(); i++){
                 JSONObject item=all.getJSONObject(i);
                 String username = item.getString("Username");
-                test.append(username).append(" ").append("\n");
-                textView.setText(test);
-                System.out.println(username);
-
+                test.append(username);
+                System.out.println("Processed JSON: " + test);
+                addChatToList(layout, test);
+                test.replace(0, test.length(), "");
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public int dpToPx(int dp) {
+        float density = getResources().getDisplayMetrics().density;
+        return Math.round(dp * density);
+    }
+
+    public void addChatToList(LinearLayout layout, StringBuilder str) {
+        System.out.println("Adding Chat to ChatList");
+        TextView chat = new TextView(this);
+        chat.setText(str);
+        chat.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+        chat.setPadding(7,7,7,7);
+
+        int dpTop = 30;
+        int dpSide = 12;
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        int marginTopInPx = dpToPx(dpTop);
+        int marginSideInPx = dpToPx(dpSide);
+        layoutParams.setMargins(marginSideInPx, marginTopInPx, marginSideInPx, 0);
+        chat.setLayoutParams(layoutParams);
+        layout.addView(chat);
     }
 }

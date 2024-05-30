@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -31,7 +33,7 @@ import okhttp3.Response;
 public class UserChatListUI extends AppCompatActivity {
     OkHttpClient client;
     TextView textView ,settings;
-
+    LinearLayout layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +41,7 @@ public class UserChatListUI extends AppCompatActivity {
         setContentView(R.layout.activity_user_chat_list_ui);
         Button buttonGet = findViewById(R.id.button2);
             client = new OkHttpClient();
-            textView = findViewById(R.id.textData);
+            //textView = findViewById(R.id.textData);
             settings = findViewById(R.id.settingsTextView);
         SharedPreferences sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
         String email = sharedPref.getString("EmailAddress", null);
@@ -83,7 +85,7 @@ public class UserChatListUI extends AppCompatActivity {
                         try {
 
                             String jsonResponse = response.body().string();
-                            textView.setText(jsonResponse);
+                            //textView.setText(jsonResponse);
                             processJSON(jsonResponse);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -95,6 +97,7 @@ public class UserChatListUI extends AppCompatActivity {
         });
     }
     public void processJSON(String json){
+        layout = (LinearLayout) findViewById(R.id.listChats);
         try {
             JSONArray all = new JSONArray(json);
             StringBuilder test = new StringBuilder();
@@ -102,12 +105,33 @@ public class UserChatListUI extends AppCompatActivity {
                 JSONObject item=all.getJSONObject(i);
                 String firstName = item.getString("FirstName");
                 test.append(firstName).append(" ").append("\n");
-                textView.setText(test);
-                System.out.println(firstName);
-
+                System.out.println("Processed JSON");
+                addChatToList(layout, test);
+                test.replace(0, test.length(), "");
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public int dpToPx(int dp) {
+        float density = getResources().getDisplayMetrics().density;
+        return Math.round(dp * density);
+    }
+
+    public void addChatToList(LinearLayout layout, StringBuilder str) {
+        System.out.println("Adding Chat to ChatList");
+        TextView chat = new TextView(this);
+        chat.setText(str);
+        chat.setPadding(7,7,7,7);
+
+        int dpTop = 30;
+        int dpSide = 12;
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        int marginTopInPx = dpToPx(dpTop);
+        int marginSideInPx = dpToPx(dpSide);
+        layoutParams.setMargins(marginSideInPx, marginTopInPx, marginSideInPx, 0);
+        chat.setLayoutParams(layoutParams);
+        layout.addView(chat);
     }
 }
