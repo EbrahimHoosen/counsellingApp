@@ -19,6 +19,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.divider.MaterialDivider;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -126,13 +128,9 @@ public class CounsellorChatListUI extends AppCompatActivity {
         System.out.println("Adding Chat to ChatList");
         TextView chat = new TextView(this);
         chat.setText(str);
+        chat.setTextColor(Color.parseColor("#000000"));
         chat.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
-        chat.setPadding(7,7,7,7);
-        if (position % 2 == 0) {//whenever we have an alternating entry, change the background of it
-            chat.setBackgroundColor(Color.parseColor("#F9F9EB"));
-        } else {
-            chat.setBackgroundColor(Color.parseColor("#F3B35E"));
-        }
+        chat.setPadding(dpToPx(10),dpToPx(10),dpToPx(10),dpToPx(10));
     chat.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -146,8 +144,13 @@ public class CounsellorChatListUI extends AppCompatActivity {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         int marginTopInPx = dpToPx(dpTop);
         int marginSideInPx = dpToPx(dpSide);
+        MaterialDivider divider = new MaterialDivider(this);
+        LinearLayout.LayoutParams dividerParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(2)); //thickness of divider
+        //dividerParams.setMargins(0,marginTopInPx,0,0);
+        divider.setLayoutParams(dividerParams);
         layoutParams.setMargins(marginSideInPx, marginTopInPx, marginSideInPx, 0);
-        chat.setLayoutParams(layoutParams);
+        //chat.setLayoutParams(layoutParams);
         layout.addView(chat);
+        layout.addView(divider);
     }
 }
