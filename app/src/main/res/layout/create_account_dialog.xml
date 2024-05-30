@@ -62,14 +62,14 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="@color/tan"
                     android:fontFamily="sans-serif-condensed-medium"
                     android:padding="12dp"
                     android:text="User"
                     android:textColor="@color/black"
                     android:textSize="14sp"
-                    app:strokeColor="@color/black"
-                    app:strokeWidth="2dp" />
+                    app:strokeColor="@color/tan"
+                    app:strokeWidth="1dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnCreateCounsellor"
@@ -77,14 +77,14 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="@color/tan"
                     android:fontFamily="sans-serif-condensed-medium"
                     android:padding="12dp"
                     android:text="Counsellor"
                     android:textColor="@color/black"
                     android:textSize="14sp"
-                    app:strokeColor="@color/black"
-                    app:strokeWidth="2dp" />
+                    app:strokeColor="@color/tan"
+                    app:strokeWidth="1dp" />
 
             </LinearLayout>
 
@@ -101,13 +101,12 @@
                 android:fontFamily="sans-serif-condensed-medium"
                 android:padding="12dp"
                 android:text="Cancel"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="14sp"
-                app:strokeColor="@color/black"
-                app:strokeWidth="2dp" />
+                app:strokeColor="@color/red"
+                app:strokeWidth="1dp" />
 
         </LinearLayout>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

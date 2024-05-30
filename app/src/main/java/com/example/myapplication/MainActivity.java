@@ -3,13 +3,16 @@ package com.example.myapplication;
 import static android.widget.Toast.LENGTH_SHORT;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -34,8 +37,9 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    Dialog createAccountDialog;
-    Button btnCreateAccountCancel, btnCreateAccountUser, btnCreateAccountCounsellor;
+    private Dialog createAccountDialog;
+    private String email, password, userType;
+    private Login loginAttempt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +55,66 @@ public class MainActivity extends AppCompatActivity {
         Button btnLogin = findViewById(R.id.btnLogin);
         RadioButton user = findViewById(R.id.radioUser);
         RadioButton counsellor = findViewById(R.id.radioCounsellor);
+
+        EditText email_txt = (EditText) findViewById(R.id.txtEmail);
+        EditText password_txt = (EditText) findViewById(R.id.txtPassword);
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                email = email_txt.getText().toString();
+                password = password_txt.getText().toString();
 
-                if (user.isChecked()) {
-                    login("Users");
-                } else if (counsellor.isChecked()) {
-                    login("Counsellors");
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Email and Password Required", LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(MainActivity.this, "User Type Must Be Selected", LENGTH_SHORT).show();
+                    if (!user.isChecked() && !counsellor.isChecked()) {
+                        Toast.makeText(MainActivity.this, "User Type Must Be Selected", LENGTH_SHORT).show();
+                    } else {
+                        if (user.isChecked()) {
+                            //Creates an instance of the Login class to verify User credentials
+                            loginAttempt = new Login(email, password, "Users");
+                            userType = "user";
+                        } else if (counsellor.isChecked()) {
+                            //Creates an instance of the Login class to verify Counsellor credentials
+                            loginAttempt = new Login(email, password, "Counsellors");
+                            userType = "counsellor";
+                        }
+                        loginAttempt.login(new Login.LoginCallback() {
+                            @Override
+                            public void onResult(String result) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(MainActivity.this, result, LENGTH_SHORT).show();
+                                        if (result.equals("Login Successful")) {
+                                            if (userType.equals("user")) {
+                                                User newLogin = new User(loginAttempt.getUsername(), loginAttempt.getEmail(), loginAttempt.getImageID(), loginAttempt.getUserID());
+                                                Intent userChatListUI = new Intent(getApplicationContext(), UserChatListUI.class);
+                                                startActivity(userChatListUI);
+                                                SharedPreferences sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);// this is how you store the value of username to compare it in the php
+                                                SharedPreferences.Editor editor = sharedPref.edit();
+                                                editor.putString("EmailAddress", email);// put the actual input email value so it can be saved and used in UserChatList
+                                                editor.apply();
+                                                System.out.println(newLogin);
+                                            } else if (userType.equals("counsellor")) {
+                                                Counsellor newLogin = new Counsellor(loginAttempt.getFirstName(), loginAttempt.getLastName(), loginAttempt.getEmail(), loginAttempt.getCounsellorID());
+                                                Intent counsellorChatListUI = new Intent(getApplicationContext(), CounsellorChatListUI.class);
+                                                startActivity(counsellorChatListUI);
+                                                SharedPreferences sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);// this is how you store the value of username to compare it in the php
+                                                SharedPreferences.Editor editor = sharedPref.edit();
+                                                editor.putString("EmailAddress", email);// put the actual input email value so it can be saved and used in UserChatList
+                                                editor.apply();
+                                                System.out.println(newLogin);
+                                            }
+                                        }
+                                        // Add code to take to chatUI here
+                                    }
+                                });
+                            }
+                        });
+                    }
+
                 }
 
             }
@@ -74,28 +128,28 @@ public class MainActivity extends AppCompatActivity {
         createAccountDialog.setCancelable(false);
 
         //Creates a user account
-        btnCreateAccountUser = createAccountDialog.findViewById(R.id.btnCreateUser);
+        Button btnCreateAccountUser = createAccountDialog.findViewById(R.id.btnCreateUser);
         btnCreateAccountUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent instRegisterUser = new Intent(getApplicationContext(), registerUser.class);
-                startActivity(instRegisterUser);
+                Intent userRegPage = new Intent(getApplicationContext(), registerUser.class);
+                startActivity(userRegPage);
                 //createAccountDialog.dismiss();
             }
         });
 
         //Creates a counsellor account
-        btnCreateAccountCounsellor = createAccountDialog.findViewById(R.id.btnCreateCounsellor);
+        Button btnCreateAccountCounsellor = createAccountDialog.findViewById(R.id.btnCreateCounsellor);
         btnCreateAccountCounsellor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent instRegisterCounsellor = new Intent(getApplicationContext(), registerCounsellor.class);
-                startActivity(instRegisterCounsellor);
+                Intent counsellorRegPage = new Intent(getApplicationContext(), registerCounsellor.class);
+                startActivity(counsellorRegPage);
                 //createAccountDialog.dismiss();
             }
         });
 
-        btnCreateAccountCancel = createAccountDialog.findViewById(R.id.btnCancel);
+        Button btnCreateAccountCancel = createAccountDialog.findViewById(R.id.btnCancel);
         btnCreateAccountCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,8 +158,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Initializes the create account dialog popup
-        Button btnCreateAccount = findViewById(R.id.btnCreateAccount);
-        btnCreateAccount.setOnClickListener(new View.OnClickListener() {
+        TextView stringToSignUpPage = findViewById(R.id.textViewToSignUp);
+        stringToSignUpPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createAccountDialog.show();
@@ -113,61 +167,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void login(String type) {
-
-        OkHttpClient client = new OkHttpClient();
-
-        String email, password;
-        EditText emailTxt = (EditText) findViewById(R.id.txtEmail);
-        EditText passwordTxt = (EditText) findViewById(R.id.txtPassword);
-
-        email = emailTxt.getText().toString();
-        password = passwordTxt.getText().toString();
-
-        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://lamp.ms.wits.ac.za/home/s2663134/login.php").newBuilder();
-        urlBuilder.addQueryParameter("email", email);
-        urlBuilder.addQueryParameter("password", password);
-        urlBuilder.addQueryParameter("table", type);
-        String url = urlBuilder.build().toString();
-
-        Request req = new Request.Builder().url(url).build();
-
-        client.newCall(req).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                final String responseData = response.body().string();
-                MainActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-
-                            JSONArray all = new JSONArray(responseData);
-                            String jsonEmail = "";
-                            for (int i = 0; i < all.length(); i++) {
-                                JSONObject item = all.getJSONObject(i);
-                                jsonEmail = item.getString("EmailAddress");
-                            }
-                            if (!email.equals("")) {
-                                if (email.equals(jsonEmail)) {
-                                    Toast.makeText(MainActivity.this, "Login Successful", LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(MainActivity.this, "Email or Password Incorrect", LENGTH_SHORT).show();
-                                }
-                            } else {
-                                Toast.makeText(MainActivity.this, "Email or Password Incorrect", LENGTH_SHORT).show();
-                            }
-
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                });
-            }
-        });
-    }
 }

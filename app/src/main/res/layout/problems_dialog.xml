@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp">
+
+    <TextView
+        android:id="@+id/txtLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="select problems"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textSize="24sp"
+        android:textStyle="italic"
+        android:typeface="normal"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtLogin">
+
+            <CheckBox
+                android:id="@+id/checkbox_depression"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:button="@null"
+                android:drawableEnd="@drawable/checkbox_state"
+                android:padding="5dp"
+                android:text="Depression" />
+
+            <CheckBox
+                android:id="@+id/checkbox_anxiety"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableEnd="@drawable/checkbox_state"
+                android:padding="5dp"
+                android:text="Anxiety" />
+
+            <CheckBox
+                android:id="@+id/checkbox_PTSD"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableEnd="@drawable/checkbox_state"
+                android:padding="5dp"
+                android:text="PTSD" />
+
+            <CheckBox
+                android:id="@+id/checkbox_addiction"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableEnd="@drawable/checkbox_state"
+                android:padding="5dp"
+                android:text="Addiction" />
+
+            <CheckBox
+                android:id="@+id/checkbox_paranoia"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableEnd="@drawable/checkbox_state"
+                android:padding="5dp"
+                android:text="Paranoia" />
+
+            <CheckBox
+                android:id="@+id/checkbox_insomnia"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableEnd="@drawable/checkbox_state"
+                android:padding="5dp"
+                android:text="Insomnia" />
+
+            <CheckBox
+                android:id="@+id/checkbox_bodyDysmorphia"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableEnd="@drawable/checkbox_state"
+                android:padding="5dp"
+                android:text="Body Dismorphia" />
+
+            <CheckBox
+                android:id="@+id/checkbox_bpd"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableEnd="@drawable/checkbox_state"
+                android:padding="5dp"
+                android:text="Borderline Personality Disorder (BPD)" />
+
+            <CheckBox
+                android:id="@+id/checkbox_schizo"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableEnd="@drawable/checkbox_state"
+                android:padding="5dp"
+                android:text="Schizophrenia" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/confirm_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/tan"
+            android:text="confirm"
+            android:textColor="@color/black"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

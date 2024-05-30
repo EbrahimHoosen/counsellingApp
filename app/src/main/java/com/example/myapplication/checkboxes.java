@@ -18,22 +18,37 @@ public class checkboxes extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.checkboxes);
+        setContentView(R.layout.problems_dialog);
 
         confirm = findViewById(R.id.confirm_button);
-        CheckBox otherCheckbox = findViewById(R.id.checkbox_other);
-        CheckBox cheeseCheckbox = findViewById(R.id.checkbox_cheese);
-        CheckBox depressionCheckbox = findViewById(R.id.checkbox_depression);
-        CheckBox PTSDCheckbox = findViewById(R.id.checkbox_PTSD);
-        CheckBox phobiasCheckbox = findViewById(R.id.checkbox_phobias);
-        CheckBox anxietyCheckbox = findViewById(R.id.checkbox_anxiety);
 
-        otherCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
-        cheeseCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
-        depressionCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
-        PTSDCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
-        phobiasCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
-        anxietyCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
+//        CheckBox otherCheckbox = findViewById(R.id.checkbox_bpd);
+//        CheckBox paranoiaCheckbox = findViewById(R.id.checkbox_insomnia);
+//        CheckBox depressionCheckbox = findViewById(R.id.checkbox_depression);
+//        CheckBox PTSDCheckbox = findViewById(R.id.checkbox_PTSD);
+//        CheckBox phobiasCheckbox = findViewById(R.id.checkbox_addiction);
+//        CheckBox anxietyCheckbox = findViewById(R.id.checkbox_anxiety);
+//        CheckBox addictionCheckbox = findViewById(R.id.checkbox_paranoia);
+//        CheckBox insomniaCheckbox = findViewById(R.id.checkbox_bodyDismorphia);
+
+        CheckBox cbxDepression = findViewById(R.id.checkbox_depression);
+        CheckBox cbxAnxiety = findViewById(R.id.checkbox_anxiety);
+        CheckBox cbxPTSD = findViewById(R.id.checkbox_PTSD);
+        CheckBox cbxAddiction = findViewById(R.id.checkbox_addiction);
+        CheckBox cbxParanoia = findViewById(R.id.checkbox_paranoia);
+        CheckBox cbxInsomnia = findViewById(R.id.checkbox_insomnia);
+        CheckBox cbxBodyDysmorphia = findViewById(R.id.checkbox_bodyDysmorphia);
+        CheckBox cbxBPD = findViewById(R.id.checkbox_bpd);
+        CheckBox cbxSchizo = findViewById(R.id.checkbox_schizo);
+
+//        otherCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
+//        anxietyCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
+//        depressionCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
+//        PTSDCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
+//        phobiasCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
+//        addictionCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
+//        paranoiaCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
+//        insomniaCheckbox.setOnCheckedChangeListener(checkBoxChangeListener);
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
