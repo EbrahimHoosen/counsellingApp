@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -108,7 +109,7 @@ public class CounsellorChatListUI extends AppCompatActivity {
                 String username = item.getString("Username");
                 test.append(username);
                 System.out.println("Processed JSON: " + test);
-                addChatToList(layout, test);
+                addChatToList(layout, test, i,username);
                 test.replace(0, test.length(), "");
             }
         } catch (JSONException e) {
@@ -121,13 +122,25 @@ public class CounsellorChatListUI extends AppCompatActivity {
         return Math.round(dp * density);
     }
 
-    public void addChatToList(LinearLayout layout, StringBuilder str) {
+    public void addChatToList(LinearLayout layout, StringBuilder str, int position, String username) {
         System.out.println("Adding Chat to ChatList");
         TextView chat = new TextView(this);
         chat.setText(str);
         chat.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
         chat.setPadding(7,7,7,7);
-
+        if (position % 2 == 0) {//whenever we have an alternating entry, change the background of it
+            chat.setBackgroundColor(Color.parseColor("#F9F9EB"));
+        } else {
+            chat.setBackgroundColor(Color.parseColor("#F3B35E"));
+        }
+    chat.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent toChatUI = new Intent(getApplicationContext(), counsellorChatUI.class);
+            toChatUI.putExtra("Username", username);//this will open me to the chat with the username i click on
+            startActivity(toChatUI);
+        }
+    });
         int dpTop = 30;
         int dpSide = 12;
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);

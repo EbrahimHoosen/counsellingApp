@@ -106,7 +106,7 @@ public class UserChatListUI extends AppCompatActivity {
                 String firstName = item.getString("FirstName");
                 test.append(firstName).append(" ").append("\n");
                 System.out.println("Processed JSON");
-                addChatToList(layout, test);
+                addChatToList(layout, test, firstName);
                 test.replace(0, test.length(), "");
             }
         } catch (JSONException e) {
@@ -119,7 +119,7 @@ public class UserChatListUI extends AppCompatActivity {
         return Math.round(dp * density);
     }
 
-    public void addChatToList(LinearLayout layout, StringBuilder str) {
+    public void addChatToList(LinearLayout layout, StringBuilder str, String FirstName) {
         System.out.println("Adding Chat to ChatList");
         TextView chat = new TextView(this);
         chat.setText(str);
@@ -130,8 +130,17 @@ public class UserChatListUI extends AppCompatActivity {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         int marginTopInPx = dpToPx(dpTop);
         int marginSideInPx = dpToPx(dpSide);
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toChatUI = new Intent(getApplicationContext(), userChatUI.class);
+                toChatUI.putExtra("FirstName", FirstName);//this will open me to the chat with the firstname i click on
+                startActivity(toChatUI);
+            }
+        });
         layoutParams.setMargins(marginSideInPx, marginTopInPx, marginSideInPx, 0);
         chat.setLayoutParams(layoutParams);
         layout.addView(chat);
     }
 }
+
