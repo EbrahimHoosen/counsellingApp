@@ -150,7 +150,7 @@ public class registerUser extends AppCompatActivity {
                                         } else if (!password.equals(confirmPassword)) {
                                             Toast.makeText(registerUser.this, "Passwords Do Not Match", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            registerUser(username, email, password);
+                                            registerUser(username, email, password,problems);
                                             Toast.makeText(registerUser.this, "Sign Up Successful", Toast.LENGTH_SHORT).show();
                                             Intent backToRegUser = new Intent(getApplicationContext(), MainActivity.class);
                                             startActivity(backToRegUser);
@@ -178,12 +178,14 @@ public class registerUser extends AppCompatActivity {
         });
     }
 
-    public void registerUser(String userName, String Email, String Pass) {
+    public void registerUser(String userName, String Email, String Pass, ArrayList<Integer> problems) {
+        JSONArray problemsJson = new JSONArray(problems);
 
         RequestBody requestBody = new FormBody.Builder()
                 .add("username", userName)
                 .add("email" , Email)
                 .add("password", Pass)
+                .add("problems", problemsJson.toString())// send the problems as a json array so the php has the right data to do things to it
                 .build();
         Request request = new Request.Builder()
                 .url(url_Register)
