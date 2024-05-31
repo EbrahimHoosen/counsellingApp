@@ -20,7 +20,7 @@ import okhttp3.Response;
 
 public class Login {
 
-    private String username, email, password, type, result, imageID, firstName, lastName;
+    private String username, email, password, type, result, imageID, firstName, lastName, qualification;
     private int userID, counsellorID;
     Login(String inEmail, String inPassword, String inType) {
         email = inEmail;
@@ -65,6 +65,7 @@ public class Login {
                             firstName = item.getString("FirstName");
                             lastName = item.getString("LastName");
                             counsellorID = item.getInt("CounsellorID");
+                            qualification = item.getString("Qualification");
                         }
                     }
                     if (email.equals(jsonEmail)) {
@@ -116,5 +117,9 @@ public class Login {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getQualification() {
+        return qualification;
     }
 }
