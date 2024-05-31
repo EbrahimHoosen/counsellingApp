@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,7 +20,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.divider.MaterialDivider;
+import com.google.android.material.navigation.NavigationBarView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,40 +37,58 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class CounsellorChatListUI extends AppCompatActivity {
+
+    BottomNavigationView navView;
     OkHttpClient client;
     TextView textView, settings;
-    LinearLayout layout;
+    LinearLayout chats, profile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_counsellor_chat_list_ui);
 
-        Button buttonGet = findViewById(R.id.button2);
+        navView = findViewById(R.id.bottom_navigation);
+
+        navView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                if (item.getItemId()==R.id.menu_chats) {
+                    showChats();
+                }
+                if (item.getItemId()==R.id.menu_profile) {
+                    showProfile();
+                }
+                return true;
+            }
+        });
+
+        chats = findViewById(R.id.listChats);
+        profile = findViewById(R.id.counsellorProfile);
+
+        profile.setVisibility(View.GONE);
+
+        //Button buttonGet = findViewById(R.id.button2);
         client = new OkHttpClient();
         //textView = findViewById(R.id.textData);
-        settings = findViewById(R.id.settingsTextView);
+        //settings = findViewById(R.id.settingsTextView);
         SharedPreferences sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
-        String email = sharedPref.getString("EmailAddress", null);//shared preference is how i keep track of the stored email and can tell which user is logged in
+        String email = sharedPref.getString("EmailAddress", null); //shared preference is how i keep track of the stored email and can tell which user is logged in
 
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent toSettings = new Intent(getApplicationContext(),settings.class);
-                startActivity(toSettings);
-            }
-        });
 
-        buttonGet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                getOther(email);
-            }
-        });
+        getOther(email);
     }
 
+    private void showChats() {
+        chats.setVisibility(View.VISIBLE);
+        profile.setVisibility(View.GONE);
+    }
 
+    private void showProfile() {
+        chats.setVisibility(View.GONE);
+        profile.setVisibility(View.VISIBLE);
+    }
 
     public void getOther(String EmailAddress) {// this would usually have the parameters in the url
 
@@ -102,7 +123,6 @@ public class CounsellorChatListUI extends AppCompatActivity {
     }
     public void processJSON(String json){
         System.out.println("Processing JSON");
-        layout = (LinearLayout) findViewById(R.id.listChats);
         try {
             JSONArray all = new JSONArray(json);
             StringBuilder test = new StringBuilder();
@@ -111,7 +131,7 @@ public class CounsellorChatListUI extends AppCompatActivity {
                 String username = item.getString("Username");
                 test.append(username);
                 System.out.println("Processed JSON: " + test);
-                addChatToList(layout, test, i,username);
+                addChatToList(chats, test, i,username);
                 test.replace(0, test.length(), "");
             }
         } catch (JSONException e) {
