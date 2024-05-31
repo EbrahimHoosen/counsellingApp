@@ -1,9 +1,12 @@
 package com.example.myapplication;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -29,16 +32,18 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class userChatUI extends AppCompatActivity {
-    ImageButton back;
     OkHttpClient client;
     TextView usernameTextView;
+    ImageButton btnSettings;
+    Dialog userSettingsDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_user_chat_ui);
-        back = findViewById(R.id.back_button);
+
         usernameTextView = findViewById(R.id.username);
+        btnSettings = findViewById(R.id.user_settings);
 
         client = new OkHttpClient();
 
@@ -46,12 +51,47 @@ public class userChatUI extends AppCompatActivity {
         int userID = sharedPref.getInt("UserID", 0); //retrieve the stored UserID
         System.out.println("UserID: " + userID);
         getOther(userID);
-        back.setOnClickListener(new View.OnClickListener() {
+
+        userSettingsDialog = new Dialog(userChatUI.this);
+        userSettingsDialog.setContentView(R.layout.user_settings_dialog);
+        userSettingsDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        userSettingsDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.create_account_bg));
+        userSettingsDialog.setCancelable(false);
+
+        ImageButton btnCloseSettings = userSettingsDialog.findViewById(R.id.user_settings_close);
+        ImageButton btnLogout = userSettingsDialog.findViewById(R.id.logout);
+
+        TextView txtUsername = userSettingsDialog.findViewById(R.id.text_username);
+        TextView txtEmail = userSettingsDialog.findViewById(R.id.text_email);
+
+        String username = sharedPref.getString("Username", "");
+        String email = sharedPref.getString("Email", "");
+
+        txtUsername.setText(username);
+        txtEmail.setText(email);
+
+        btnCloseSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                userSettingsDialog.dismiss();
             }
         });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginPage = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(loginPage);
+            }
+        });
+
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userSettingsDialog.show();
+            }
+        });
+
     }
 
     public void getOther(int id) {// this would usually have the parameters in the url

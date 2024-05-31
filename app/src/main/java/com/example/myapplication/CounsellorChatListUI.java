@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -40,7 +41,8 @@ public class CounsellorChatListUI extends AppCompatActivity {
 
     BottomNavigationView navView;
     OkHttpClient client;
-    TextView textView, settings;
+    TextView tlbText, txtName, txtEmail, txtQuali;
+    ImageButton btnLogout;
     LinearLayout chats, profile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,19 @@ public class CounsellorChatListUI extends AppCompatActivity {
         setContentView(R.layout.activity_counsellor_chat_list_ui);
 
         navView = findViewById(R.id.bottom_navigation);
+        tlbText = findViewById(R.id.toolbar_text);
+        txtName = findViewById(R.id.text_name);
+        txtEmail = findViewById(R.id.text_email);
+        txtQuali = findViewById(R.id.text_quali);
+        btnLogout = findViewById(R.id.logout);
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginPage = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(loginPage);
+            }
+        });
 
         navView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -75,16 +90,29 @@ public class CounsellorChatListUI extends AppCompatActivity {
         //settings = findViewById(R.id.settingsTextView);
         SharedPreferences sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
         int counsellorID = sharedPref.getInt("CounsellorID", 0); //retrieve the stored CounsellorID
+        String firstName = sharedPref.getString("FirstName", "");
+        String lastName = sharedPref.getString("LastName", "");
+        String email = sharedPref.getString("Email", "");
+        String quali = sharedPref.getString("Qualification", "");
+
+        StringBuilder name = new StringBuilder();
+        name.append(firstName).append(" ").append(lastName);
+
+        txtName.setText(name);
+        txtEmail.setText(email);
+        txtQuali.setText(quali);
 
         getOther(counsellorID);
     }
 
     private void showChats() {
+        tlbText.setText("Chats");
         chats.setVisibility(View.VISIBLE);
         profile.setVisibility(View.GONE);
     }
 
     private void showProfile() {
+        tlbText.setText("Profile");
         chats.setVisibility(View.GONE);
         profile.setVisibility(View.VISIBLE);
     }

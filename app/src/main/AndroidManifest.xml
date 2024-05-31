@@ -27,9 +27,6 @@
             android:name=".CounsellorChatListUI"
             android:exported="false" />
         <activity
-            android:name=".UserChatListUI"
-            android:exported="false" />
-        <activity
             android:name=".registerCounsellor"
             android:exported="false" />
         <activity
