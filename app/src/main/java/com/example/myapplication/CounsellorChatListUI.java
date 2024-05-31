@@ -74,10 +74,9 @@ public class CounsellorChatListUI extends AppCompatActivity {
         //textView = findViewById(R.id.textData);
         //settings = findViewById(R.id.settingsTextView);
         SharedPreferences sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
-        String email = sharedPref.getString("EmailAddress", null); //shared preference is how i keep track of the stored email and can tell which user is logged in
+        int counsellorID = sharedPref.getInt("CounsellorID", 0); //retrieve the stored CounsellorID
 
-
-        getOther(email);
+        getOther(counsellorID);
     }
 
     private void showChats() {
@@ -90,10 +89,10 @@ public class CounsellorChatListUI extends AppCompatActivity {
         profile.setVisibility(View.VISIBLE);
     }
 
-    public void getOther(String EmailAddress) {// this would usually have the parameters in the url
+    public void getOther(int id) {// this would usually have the parameters in the url
 
         Request request = new Request.Builder()
-                .url("https://lamp.ms.wits.ac.za/home/s2663134/chatListCounsellor.php?EmailAddress=" + EmailAddress )
+                .url("https://lamp.ms.wits.ac.za/home/s2663134/listCounsellorChats.php?CounsellorID=" + id )
                 .build();
 
         client.newCall(request).enqueue(new Callback() {

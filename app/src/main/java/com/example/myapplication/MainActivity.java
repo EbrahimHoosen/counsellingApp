@@ -90,11 +90,11 @@ public class MainActivity extends AppCompatActivity {
                                         if (result.equals("Login Successful")) {
                                             if (userType.equals("user")) {
                                                 User newLogin = new User(loginAttempt.getUsername(), loginAttempt.getEmail(), loginAttempt.getImageID(), loginAttempt.getUserID());
-                                                Intent userChatListUI = new Intent(getApplicationContext(), UserChatListUI.class);
+                                                Intent userChatListUI = new Intent(getApplicationContext(), userChatUI.class);
                                                 startActivity(userChatListUI);
                                                 SharedPreferences sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);// this is how you store the value of username to compare it in the php
                                                 SharedPreferences.Editor editor = sharedPref.edit();
-                                                editor.putString("EmailAddress", email);// put the actual input email value so it can be saved and used in UserChatList
+                                                editor.putInt("UserID", loginAttempt.getUserID()); //store the UserID to use in other activities
                                                 editor.apply();
                                                 System.out.println(newLogin);
                                             } else if (userType.equals("counsellor")) {
@@ -103,12 +103,11 @@ public class MainActivity extends AppCompatActivity {
                                                 startActivity(counsellorChatListUI);
                                                 SharedPreferences sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);// this is how you store the value of username to compare it in the php
                                                 SharedPreferences.Editor editor = sharedPref.edit();
-                                                editor.putString("EmailAddress", email);// put the actual input email value so it can be saved and used in UserChatList
+                                                editor.putInt("CounsellorID", loginAttempt.getCounsellorID()); //store the CounsellorID to use in other activities
                                                 editor.apply();
                                                 System.out.println(newLogin);
                                             }
                                         }
-                                        // Add code to take to chatUI here
                                     }
                                 });
                             }

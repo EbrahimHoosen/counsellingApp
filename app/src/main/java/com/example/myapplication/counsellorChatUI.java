@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class counsellorChatUI extends AppCompatActivity {
     ImageButton back;
+    TextView username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +22,9 @@ public class counsellorChatUI extends AppCompatActivity {
         setContentView(R.layout.activity_counsellor_chat_ui);
 
         back = findViewById(R.id.back_button);
+        username = findViewById(R.id.username);
+        String user = getIntent().getStringExtra("Username");
+        username.setText(user);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
