@@ -40,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private Dialog createAccountDialog;
     private String email, password, userType;
     private Login loginAttempt;
+    public static User loggedInUser;
+    public static User currentUser;
+    public static Counsellor currentCounsellor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                                                 User newLogin = new User(loginAttempt.getUsername(), loginAttempt.getEmail(), loginAttempt.getImageID(), loginAttempt.getUserID());
 
                                                 Intent userChatListUI = new Intent(getApplicationContext(), userChatUI.class);
+                                                currentUser = newLogin;
                                                 startActivity(userChatListUI);
 
                                                 SharedPreferences sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);// this is how you store the value of username to compare it in the php
@@ -104,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                                                 System.out.println(newLogin);
                                             } else if (userType.equals("counsellor")) {
                                                 Counsellor newLogin = new Counsellor(loginAttempt.getFirstName(), loginAttempt.getLastName(), loginAttempt.getEmail(), loginAttempt.getCounsellorID());
-
+                                                currentCounsellor = newLogin;
                                                 Intent counsellorChatListUI = new Intent(getApplicationContext(), CounsellorChatListUI.class);
                                                 startActivity(counsellorChatListUI);
 
